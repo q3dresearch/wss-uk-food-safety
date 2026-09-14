@@ -11,15 +11,52 @@ The OGL requires attribution. Use this:
 > Contains public sector information licensed under the Open Government Licence
 > v3.0. Source: Food Standards Agency, https://ratings.food.gov.uk/open-data
 
+Verified against the publisher's own terms on 2026-09-14, not assumed:
+ratings.food.gov.uk/terms-and-conditions says, in full,
+
+> "Use of proprietary food hygiene ratings information and services is subject
+> to the terms of the Open Government Licence (OGL)."
+
 The OGL permits copying, publishing, adapting and commercial re-use, which is
 why this archive can exist and can be public. It does **not** permit implying
 that the Food Standards Agency endorses this repository or anything derived
 from it. It does not.
 
+## The condition this archive has to meet, in the publisher's words
+
+The same terms carry an obligation aimed directly at anyone republishing
+ratings:
+
+> "The ratings are subject to change as they are regularly updated to reflect
+> the standards found when a business is inspected by a local authority food
+> safety officer. Users are reminded that displaying or otherwise using an
+> invalid or inaccurate rating may constitute a criminal offence and/or expose
+> the user to potential civil liability. **It is the responsibility of users to
+> ensure that the current rating is used or to indicate the date when the
+> information was updated.**"
+
+This repository publishes ratings that are deliberately **not** current — that
+is its entire purpose — so it takes the second option, everywhere and without
+exception:
+
+- every observation carries `observed_at`, set to the **`ExtractDate` the FSA
+  stamped on the file**, not the time we fetched it;
+- every establishment carries `rating_date`, the date the rating was given;
+- every chart states the capture it was drawn from.
+
+**This is not a current-ratings service and must not be used as one.** For the
+rating that applies to a business today, go to
+[ratings.food.gov.uk](https://ratings.food.gov.uk). Where that site and this
+archive disagree, the FSA is right and this is stale.
+
+## Trademarks
+
+The FHRS/FHIS rating imagery and the FSA logo are registered UK trademarks and
+are **not** reproduced here. No badge, sticker or logo appears in this
+repository or in any chart it generates.
+
 **This is not the FSA's own data.** It is a record of what the FSA published on
-particular dates, including values the FSA has since overwritten. Where this
-repository and ratings.food.gov.uk disagree about a current rating, the FSA is
-right and this is stale.
+particular dates, including values the FSA has since overwritten.
 
 ## What is in this repository, and what is not
 

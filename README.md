@@ -198,8 +198,18 @@ Standards Agency. Attribution is required:
 > v3.0. Source: Food Standards Agency, https://ratings.food.gov.uk/open-data
 
 The OGL does not permit implying FSA endorsement of this repository, and none is
-claimed. Where this archive and ratings.food.gov.uk disagree about a current
-rating, **the FSA is right and this is stale** — the point of this repository is
-the values the FSA no longer shows, not the ones it does.
+claimed. The FSA's terms also require that a republished rating either be the
+current one or **carry the date it was updated**. This archive publishes ratings
+that are deliberately not current, so every observation is stamped with the
+`ExtractDate` the FSA put on the file and every establishment carries its
+`RatingDate`.
+
+**This is not a current-ratings service.** For the rating that applies to a
+business today, use [ratings.food.gov.uk](https://ratings.food.gov.uk). Where
+that site and this archive disagree, the FSA is right and this is stale — the
+point here is the values the FSA no longer shows, not the ones it does.
+
+No FHRS rating imagery or FSA logo is reproduced anywhere in this repository;
+both are registered trademarks.
 
 **Code: MIT.** See [`LICENSE`](LICENSE) and [`LICENSE-DATA`](LICENSE-DATA).
