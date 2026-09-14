@@ -45,7 +45,7 @@ import xml.etree.ElementTree as ET
 
 from wss import derive
 
-PARSER_VERSION = "2"
+PARSER_VERSION = "3"
 
 # FHRS scores where a rating is numeric; FHIS records carry no Scores element.
 _SCORES = ("Hygiene", "Structural", "ConfidenceInManagement")
@@ -90,6 +90,7 @@ def parse(body: bytes, ctx: derive.ParseContext):
     by_type: collections.Counter = collections.Counter()
     pending = 0
     ages: list[str] = []
+    score_totals: dict[str, dict[str, int]] = {}
 
     for est in ests:
         fhrsid = _text(est, "FHRSID")
@@ -126,13 +127,32 @@ def parse(body: bytes, ctx: derive.ParseContext):
             yield derive.Observation(eid, "postcode_district", outward.group(1).upper(),
                                      "text", observed_at=observed_at)
 
+        # LAT/LONG, WITHOUT WHICH THE BOUNDARY DESIGN IS IMPOSSIBLE. Two
+        # establishments 50 metres apart on the same high street, either side of
+        # a council line, face near-identical conditions and different
+        # regulators -- so a discontinuity across that line is the council and
+        # not the food. Nothing else in this archive can separate the two, and
+        # it needs ONE capture, not a series. Read from the file since the first
+        # version and thrown away, which is why the question was mis-marked as
+        # needing twelve months.
+        geo = est.find("Geocode")
+        if geo is not None:
+            lat, lon = _text(geo, "Latitude"), _text(geo, "Longitude")
+            if lat and lon:
+                yield derive.Observation(eid, "latitude", lat, "text",
+                                         observed_at=observed_at)
+                yield derive.Observation(eid, "longitude", lon, "text",
+                                         observed_at=observed_at)
+
         scores = est.find("Scores")
         if scores is not None:
+            bucket = score_totals.setdefault(rating, {})
             for tag in _SCORES:
                 value = _text(scores, tag)
                 if value.isdigit():
                     yield derive.Observation(eid, f"score_{tag.lower()}", int(value),
                                              "count", observed_at=observed_at)
+                    bucket[tag] = bucket.get(tag, 0) + int(value)
 
     if not authority_code:
         raise ValueError("fsa-fhrs.v1: no LocalAuthorityCode on any record")
@@ -166,6 +186,16 @@ def parse(body: bytes, ctx: derive.ParseContext):
         for month, n in sorted(months.items()):
             yield derive.Observation(f"{aid}:rated:{month}", "establishments_listed",
                                      n, "count", observed_at=observed_at)
+    # Component-score SUMS beside the counts, so a mean is derivable without
+    # shipping 613,146 per-establishment scores to whoever reads the aggregates.
+    # The scale is INVERTED -- a higher score is worse -- and that is recorded
+    # here as well as in the docstring because a reader who inverts it draws the
+    # opposite conclusion from the same numbers.
+    for rating, totals in sorted(score_totals.items()):
+        for tag, total in sorted(totals.items()):
+            yield derive.Observation(f"{aid}:rating:{rating}",
+                                     f"score_{tag.lower()}_total", total, "count",
+                                     observed_at=observed_at)
     for rating, n in sorted(by_rating.items()):
         # Keyed by authority AND rating, because a bare `rating:5` entity would
         # be written 363 times a capture with 363 different values.

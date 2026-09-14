@@ -88,6 +88,7 @@ def load():
     """Authority-level aggregates, keyed by authority code."""
     auth: dict[str, dict] = collections.defaultdict(dict)
     ratings: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
+    rated: dict[str, dict] = collections.defaultdict(dict)
     for path in sorted(glob.glob(str(REPO / "derived" / "observations" / "*.csv*"))):
         with io.TextIOWrapper(gzip.open(path, "rb"), encoding="utf-8", newline="") as fh:
             for r in csv.DictReader(fh):
@@ -96,10 +97,19 @@ def load():
                     continue
                 code = eid.split(":")[1]
                 if ":rating:" in eid:
-                    ratings[code][eid.split(":rating:")[1]] += int(r["value"])
+                    if r["metric"] == "establishments_listed":
+                        ratings[code][eid.split(":rating:")[1]] += int(r["value"])
+                elif ":rated:" in eid:
+                    rated[code][eid.split(":rated:")[1]] = int(r["value"])
                 elif ":type:" not in eid:
+                    # A SUFFIX TEST THAT LISTS TWO OF THE THREE SUB-ENTITIES IS A
+                    # TRAP. ":rated:<YYYY-MM>" contains neither ":rating:" nor
+                    # ":type:", so it fell through to here and its monthly bucket
+                    # overwrote the authority's establishments_listed -- the
+                    # national total read 4,399 instead of 613,146. Every new
+                    # sub-entity the parser emits must be handled here explicitly.
                     auth[code][r["metric"]] = r["value"]
-    return auth, ratings
+    return auth, ratings, rated
 
 
 def _scheme_map():
@@ -279,8 +289,94 @@ def chart_what_it_can_answer(auth, ratings):
     save(p, "what-it-can-answer.svg", w, h)
 
 
+def chart_boundary(_auth=None, _ratings=None):
+    """Same high street, different council.
+
+    Computed by examples/boundary.py from the per-establishment geocodes, which
+    live in object storage; the result is checked in as border_pairs.json so this
+    chart is reproducible from the repo alone.
+
+    THE DESIGN: two establishments within 150 m of each other, on opposite sides
+    of a local authority line, face near-identical trade, footfall and premises
+    stock and are inspected by different regulators. A discontinuity across that
+    line is the council, not the food. It needs ONE capture, not a series.
+
+    WHAT IT DOES NOT CONTROL FOR, said plainly: business-type mix. If one side of
+    a boundary is takeaways and the other is supermarkets, that alone moves the
+    mean. Matching on BusinessType is the next refinement and until it is done
+    these gaps are suggestive, not attributable.
+    """
+    import json
+    path = REPO / "examples" / "border_pairs.json"
+    if not path.is_file():
+        return
+    rows = json.loads(path.read_text())
+    sig = [r for r in rows if abs(r["d"]) - 1.96 * r["se"] > 0]
+    sig.sort(key=lambda r: -abs(r["d"]))
+    shown = sig[:8]
+    w = 940
+    top, rowh = 214, 46
+    h = top + len(shown) * rowh + 190
+    x0, x1 = 380, w - 150
+    hi = max(abs(r["d"]) + 1.96 * r["se"] for r in shown) * 1.08
+
+    p = head(w, h, "Same high street, different council, half a star apart",
+             "Mean rating either side of a local authority boundary, using only "
+             "establishments within 150 m of a shop in the other authority.",
+             [f"{len(rows)} boundary pairs had at least 30 such establishments on "
+              f"both sides; {len(sig)} have a 95% interval excluding zero.",
+              "Two shops 150 m apart face the same trade and the same premises "
+              "stock. What differs is who inspects them."])
+
+    def X(v):
+        return x0 + v / hi * (x1 - x0)
+
+    for tick in (0, 0.2, 0.4, 0.6, 0.8):
+        if tick > hi:
+            continue
+        p.append(L(X(tick), top - 18, X(tick), top + len(shown) * rowh - 18, GRID))
+        p.append(T(X(tick), top + len(shown) * rowh - 2, f"{tick:.1f}", 10.5,
+                   MUTED, anchor="middle"))
+    p.append(T((x0 + x1) / 2, top + len(shown) * rowh + 18,
+               "difference in mean rating (stars)", 11, MUTED, anchor="middle"))
+
+    for i, r in enumerate(shown):
+        y = top + i * rowh
+        lo = max(abs(r["d"]) - 1.96 * r["se"], 0)
+        h_ = abs(r["d"]) + 1.96 * r["se"]
+        low, high = (r["a"], r["b"]) if r["ma"] < r["mb"] else (r["b"], r["a"])
+        lowm, highm = (r["ma"], r["mb"]) if r["ma"] < r["mb"] else (r["mb"], r["ma"])
+        ln, hn = (r["na"], r["nb"]) if r["ma"] < r["mb"] else (r["nb"], r["na"])
+        p.append(T(x0 - 16, y - 4, f"{low[:22]}  {lowm:.2f}", 11.5, ACCENT,
+                   anchor="end", weight="600"))
+        p.append(T(x0 - 16, y + 11, f"{high[:22]}  {highm:.2f}", 11.5, HUE,
+                   anchor="end"))
+        p.append(T(x0 - 16, y + 25, f"n={ln} vs {hn}", 10, MUTED, anchor="end"))
+        p.append(L(X(lo), y + 4, X(h_), y + 4, INK2, 2))
+        for end in (lo, h_):
+            p.append(L(X(end), y, X(end), y + 8, INK2, 2))
+        p.append(R(X(abs(r["d"])) - 4.5, y - 0.5, 9, 9, INK, rx=2))
+        p.append(T(X(h_) + 12, y + 8, f"{abs(r['d']):.2f}", 11.5, INK, weight="600"))
+
+    y = top + len(shown) * rowh + 52
+    p.append(L(56, y, w - 56, y, GRID)); y += 28
+    p.append(T(56, y, "Every pair above is in London, and that is the method, not "
+                      "a finding about London.", 14, INK, weight="600"))
+    p.append(T(56, y + 24,
+               "150 m only finds neighbours across a boundary where shops are "
+               "dense, so the design currently reaches inner-city borders and "
+               "almost nowhere else.", 12, INK2))
+    p.append(T(56, y + 46,
+               "NOT CONTROLLED FOR: business-type mix. If one side is takeaways "
+               "and the other supermarkets, that alone moves the mean.", 12, INK2))
+    p.append(T(56, y + 64,
+               "Matching on BusinessType is the next refinement; until then these "
+               "gaps are suggestive, not attributable. See D1.", 12, INK2))
+    save(p, "boundary-discontinuity.svg", w, h)
+
+
 def main():
-    auth, ratings = load()
+    auth, ratings, rated = load()
     if not auth:
         raise SystemExit("no observations — run `wss derive` first")
     print(f"loaded {len(auth)} authorities, "
@@ -288,6 +384,7 @@ def main():
     chart_nothing_is_kept(auth, ratings)
     chart_inspection_recency(auth, ratings)
     chart_what_it_can_answer(auth, ratings)
+    chart_boundary()
 
 
 if __name__ == "__main__":

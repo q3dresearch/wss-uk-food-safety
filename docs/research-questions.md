@@ -41,6 +41,9 @@ that went 5 → 1 → 5 is indistinguishable from one that has always been 5.
 
 ## Answerable TODAY, from one capture
 
+Five questions here plus **D1** below, which is the strongest design in the set and
+was wrongly filed under "needs the archive" until the geocode was actually used.
+
 `RatingDate` is the reason. Every establishment carries the date its current
 rating was set, so the **age distribution of current ratings is a survival
 curve**: counting establishments by the month they were last rated recovers
@@ -69,7 +72,7 @@ cohort cannot support it is marked so here rather than discovered later.
 | **B4** | Do establishments oscillate, or recover once? | 18,249 | ~24 months | needs three or more observations per establishment |
 | **C1** | **Does a bad-rated business reappear under a new FHRSID at the same address?** | 18,249 | ≥2 captures | **the phoenix question, and nothing else can ask it.** FHRSID is minted per registration, so closing and re-registering resets the rating. Signal is: disappearance, then a new id at the same postcode and business type |
 | **C2** | Does the re-registered business get a better rating? | subset of C1 | ≥3 captures | conditional on C1 returning anything at all |
-| **D1** | **Do neighbouring authorities rate the same high street differently?** | 363 authorities, `Geocode` on every record | ~12 months | **the strongest identification strategy here.** Establishments within a short distance of an authority boundary face near-identical conditions and different regulators. A cross-boundary discontinuity in rating or in inspection cadence is the council, not the food |
+| **D1** | **Do neighbouring authorities rate the same high street differently?** | 7,486 establishments within 150 m of another authority's shop | **answerable today — and partly answered** | **Mis-marked as needing 12 months: it needs ONE capture.** 19 boundary pairs have ≥30 establishments on both sides; **5 have a 95% interval excluding zero**, four of them surviving a Bonferroni correction. Barnet 3.94 vs Brent 4.54 (gap 0.60, CI [0.28, 0.92]); Islington 4.19 vs Haringey 4.76; Camden 4.01 vs Brent 4.55; Westminster 4.31 vs City of London 4.79. **Every pair is in London**, because 150 m only finds cross-boundary neighbours where shops are dense — that is the method's reach, not a finding about London. **NOT CONTROLLED FOR: business-type mix**, which alone would move a mean; matching on BusinessType is the next refinement and until then these gaps are suggestive, not attributable. See `examples/boundary.py` |
 | **D2** | Is re-inspection cadence collapsing in some councils? | 363 authorities | ~12 months | A3 gives the level today; whether it is *worsening* needs the series |
 | **D3** | Does the awaiting-inspection backlog grow? | 52,764 never inspected | ~12 months | and how long the wait actually is, which nothing publishes |
 | **E1** | Is the national rating distribution drifting upward? | 613,146 | ~24 months | grade inflation is invisible without a baseline, and this is the baseline |

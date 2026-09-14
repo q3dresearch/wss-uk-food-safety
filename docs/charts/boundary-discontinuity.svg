@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="634" viewBox="0 0 940 634">
+<rect x="0.0" y="0.0" width="940.0" height="634.0" fill="#fcfcfb" rx="0"/>
+<text x="56.0" y="48.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="20" fill="#0b0b0b" text-anchor="start" font-weight="600">Same high street, different council, half a star apart</text>
+<text x="56.0" y="74.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="13" fill="#52514e" text-anchor="start" font-weight="normal">Mean rating either side of a local authority boundary, using only establishments within 150 m of a shop in the other authority.</text>
+<text x="56.0" y="96.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">19 boundary pairs had at least 30 such establishments on both sides; 5 have a 95% interval excluding zero.</text>
+<text x="56.0" y="112.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">Two shops 150 m apart face the same trade and the same premises stock. What differs is who inspects them.</text>
+<line x1="380.0" y1="196.0" x2="380.0" y2="426.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="380.0" y="442.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">0.0</text>
+<line x1="462.3" y1="196.0" x2="462.3" y2="426.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="462.3" y="442.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">0.2</text>
+<line x1="544.6" y1="196.0" x2="544.6" y2="426.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="544.6" y="442.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">0.4</text>
+<line x1="626.9" y1="196.0" x2="626.9" y2="426.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="626.9" y="442.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">0.6</text>
+<line x1="709.1" y1="196.0" x2="709.1" y2="426.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="709.1" y="442.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">0.8</text>
+<text x="585.0" y="462.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#898781" text-anchor="middle" font-weight="normal">difference in mean rating (stars)</text>
+<text x="364.0" y="210.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#eb6834" text-anchor="end" font-weight="600">Barnet  3.94</text>
+<text x="364.0" y="225.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#2a78d6" text-anchor="end" font-weight="normal">Brent  4.54</text>
+<text x="364.0" y="239.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">n=64 vs 117</text>
+<line x1="494.9" y1="218.0" x2="759.6" y2="218.0" stroke="#52514e" stroke-width="2"/>
+<line x1="494.9" y1="214.0" x2="494.9" y2="222.0" stroke="#52514e" stroke-width="2"/>
+<line x1="759.6" y1="214.0" x2="759.6" y2="222.0" stroke="#52514e" stroke-width="2"/>
+<rect x="622.8" y="213.5" width="9.0" height="9.0" fill="#0b0b0b" rx="2"/>
+<text x="771.6" y="222.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="start" font-weight="600">0.60</text>
+<text x="364.0" y="256.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#eb6834" text-anchor="end" font-weight="600">Islington  4.19</text>
+<text x="364.0" y="271.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#2a78d6" text-anchor="end" font-weight="normal">Haringey  4.76</text>
+<text x="364.0" y="285.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">n=113 vs 49</text>
+<line x1="498.8" y1="264.0" x2="729.6" y2="264.0" stroke="#52514e" stroke-width="2"/>
+<line x1="498.8" y1="260.0" x2="498.8" y2="268.0" stroke="#52514e" stroke-width="2"/>
+<line x1="729.6" y1="260.0" x2="729.6" y2="268.0" stroke="#52514e" stroke-width="2"/>
+<rect x="609.7" y="259.5" width="9.0" height="9.0" fill="#0b0b0b" rx="2"/>
+<text x="741.6" y="268.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="start" font-weight="600">0.57</text>
+<text x="364.0" y="302.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#eb6834" text-anchor="end" font-weight="600">Camden  4.01</text>
+<text x="364.0" y="317.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#2a78d6" text-anchor="end" font-weight="normal">Brent  4.55</text>
+<text x="364.0" y="331.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">n=81 vs 97</text>
+<line x1="476.6" y1="310.0" x2="722.9" y2="310.0" stroke="#52514e" stroke-width="2"/>
+<line x1="476.6" y1="306.0" x2="476.6" y2="314.0" stroke="#52514e" stroke-width="2"/>
+<line x1="722.9" y1="306.0" x2="722.9" y2="314.0" stroke="#52514e" stroke-width="2"/>
+<rect x="595.2" y="305.5" width="9.0" height="9.0" fill="#0b0b0b" rx="2"/>
+<text x="734.9" y="314.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="start" font-weight="600">0.53</text>
+<text x="364.0" y="348.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#eb6834" text-anchor="end" font-weight="600">Westminster  4.31</text>
+<text x="364.0" y="363.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#2a78d6" text-anchor="end" font-weight="normal">City of London Corpora  4.79</text>
+<text x="364.0" y="377.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">n=214 vs 38</text>
+<line x1="476.9" y1="356.0" x2="675.1" y2="356.0" stroke="#52514e" stroke-width="2"/>
+<line x1="476.9" y1="352.0" x2="476.9" y2="360.0" stroke="#52514e" stroke-width="2"/>
+<line x1="675.1" y1="352.0" x2="675.1" y2="360.0" stroke="#52514e" stroke-width="2"/>
+<rect x="571.5" y="351.5" width="9.0" height="9.0" fill="#0b0b0b" rx="2"/>
+<text x="687.1" y="360.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="start" font-weight="600">0.48</text>
+<text x="364.0" y="394.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#eb6834" text-anchor="end" font-weight="600">Westminster  4.55</text>
+<text x="364.0" y="409.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#2a78d6" text-anchor="end" font-weight="normal">Kensington and Chelsea  4.84</text>
+<text x="364.0" y="423.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">n=111 vs 131</text>
+<line x1="422.1" y1="402.0" x2="576.7" y2="402.0" stroke="#52514e" stroke-width="2"/>
+<line x1="422.1" y1="398.0" x2="422.1" y2="406.0" stroke="#52514e" stroke-width="2"/>
+<line x1="576.7" y1="398.0" x2="576.7" y2="406.0" stroke="#52514e" stroke-width="2"/>
+<rect x="494.9" y="397.5" width="9.0" height="9.0" fill="#0b0b0b" rx="2"/>
+<text x="588.7" y="406.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="start" font-weight="600">0.29</text>
+<line x1="56.0" y1="496.0" x2="884.0" y2="496.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56.0" y="524.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600">Every pair above is in London, and that is the method, not a finding about London.</text>
+<text x="56.0" y="548.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">150 m only finds neighbours across a boundary where shops are dense, so the design currently reaches inner-city borders and almost nowhere else.</text>
+<text x="56.0" y="570.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">NOT CONTROLLED FOR: business-type mix. If one side is takeaways and the other supermarkets, that alone moves the mean.</text>
+<text x="56.0" y="588.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">Matching on BusinessType is the next refinement; until then these gaps are suggestive, not attributable. See D1.</text>
+</svg>
