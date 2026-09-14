@@ -45,7 +45,7 @@ import xml.etree.ElementTree as ET
 
 from wss import derive
 
-PARSER_VERSION = "1"
+PARSER_VERSION = "2"
 
 # FHRS scores where a rating is numeric; FHIS records carry no Scores element.
 _SCORES = ("Hygiene", "Structural", "ConfidenceInManagement")
@@ -150,6 +150,22 @@ def parse(body: bytes, ctx: derive.ParseContext):
         ages.sort()
         yield derive.Observation(aid, "median_rating_date", ages[len(ages) // 2],
                                  "date", observed_at=observed_at)
+        # THE AGE DISTRIBUTION IS A SURVIVAL CURVE, and it is available from a
+        # SINGLE capture. Every establishment's RatingDate says when its current
+        # rating was set, so counting establishments by the month they were last
+        # rated gives the inspection volume that still stands -- censored, because
+        # an inspection later superseded has vanished, and the rate at which the
+        # curve decays going back in time IS the re-inspection hazard.
+        #
+        # Only the median survived the first version of this parser, which meant
+        # the repository could not answer anything about cadence until a second
+        # capture existed. It can now, today. ~60 buckets per authority.
+        months: dict[str, int] = {}
+        for day in ages:
+            months[day[:7]] = months.get(day[:7], 0) + 1
+        for month, n in sorted(months.items()):
+            yield derive.Observation(f"{aid}:rated:{month}", "establishments_listed",
+                                     n, "count", observed_at=observed_at)
     for rating, n in sorted(by_rating.items()):
         # Keyed by authority AND rating, because a bare `rating:5` entity would
         # be written 363 times a capture with 363 different values.

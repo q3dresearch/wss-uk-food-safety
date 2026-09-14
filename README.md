@@ -1,4 +1,4 @@
-# wss-food-hygiene — UK Food Hygiene Ratings
+# wss-uk-food-safety — UK Food Safety Ratings
 
 <!-- TODO: one paragraph. What does this capture, and why would the history
      otherwise be lost? The "why" is the reason anyone will care: name the

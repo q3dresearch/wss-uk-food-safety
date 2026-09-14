@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it."
 type: dataset
-title: "UK Food Hygiene Ratings (wss-food-hygiene)"
+title: "UK Food Safety Ratings (wss-uk-food-safety)"
 abstract: >-
   TODO: one paragraph on what this dataset captures, and why the history
   would otherwise be lost.
