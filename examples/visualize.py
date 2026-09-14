@@ -290,21 +290,17 @@ def chart_what_it_can_answer(auth, ratings):
 
 
 def chart_boundary(_auth=None, _ratings=None):
-    """Same high street, different council.
+    """Two dots on a rating scale, not one gap on an abstract axis.
 
-    Computed by examples/boundary.py from the per-establishment geocodes, which
-    live in object storage; the result is checked in as border_pairs.json so this
-    chart is reproducible from the repo alone.
+    The first version of this chart plotted only the DIFFERENCE between two
+    authorities, with the actual ratings sitting in text down the side doing no
+    visual work. A reader had to hold three numbers -- two means and a gap --
+    and the mark showed only the third. Nobody could read it, which is a fault
+    of the chart.
 
-    THE DESIGN: two establishments within 150 m of each other, on opposite sides
-    of a local authority line, face near-identical trade, footfall and premises
-    stock and are inspected by different regulators. A discontinuity across that
-    line is the council, not the food. It needs ONE capture, not a series.
-
-    WHAT IT DOES NOT CONTROL FOR, said plainly: business-type mix. If one side of
-    a boundary is takeaways and the other is supermarkets, that alone moves the
-    mean. Matching on BusinessType is the next refinement and until it is done
-    these gaps are suggestive, not attributable.
+    Now each row is the two councils' mean ratings as two dots on the 0-5 scale
+    everyone already understands, joined by the distance between them. The gap
+    is the line's length; the levels are where the dots sit.
     """
     import json
     path = REPO / "examples" / "border_pairs.json"
@@ -313,66 +309,127 @@ def chart_boundary(_auth=None, _ratings=None):
     rows = json.loads(path.read_text())
     sig = [r for r in rows if abs(r["d"]) - 1.96 * r["se"] > 0]
     sig.sort(key=lambda r: -abs(r["d"]))
-    shown = sig[:8]
-    w = 940
-    top, rowh = 214, 46
-    h = top + len(shown) * rowh + 190
-    x0, x1 = 380, w - 150
-    hi = max(abs(r["d"]) + 1.96 * r["se"] for r in shown) * 1.08
+    shown = sig[:6]
 
-    p = head(w, h, "Same high street, different council, half a star apart",
-             "Mean rating either side of a local authority boundary, using only "
-             "establishments within 150 m of a shop in the other authority.",
-             [f"{len(rows)} boundary pairs had at least 30 such establishments on "
-              f"both sides; {len(sig)} have a 95% interval excluding zero.",
-              "Two shops 150 m apart face the same trade and the same premises "
-              "stock. What differs is who inspects them."])
+    w = 940
+    top, rowh = 210, 54
+    h = top + len(shown) * rowh + 196
+    x0, x1 = 300, w - 250
+    lo_r, hi_r = 3.6, 5.0
 
     def X(v):
-        return x0 + v / hi * (x1 - x0)
+        return x0 + (v - lo_r) / (hi_r - lo_r) * (x1 - x0)
 
-    for tick in (0, 0.2, 0.4, 0.6, 0.8):
-        if tick > hi:
-            continue
-        p.append(L(X(tick), top - 18, X(tick), top + len(shown) * rowh - 18, GRID))
-        p.append(T(X(tick), top + len(shown) * rowh - 2, f"{tick:.1f}", 10.5,
+    p = head(w, h, "The same street, rated half a star apart",
+             "Mean hygiene rating of shops within 150 m of a council boundary, "
+             "compared with the shops just across it.",
+             ["Two premises 150 m apart share a high street, a customer base and a "
+              "building stock. What differs is which council inspects them.",
+              "Only pairs whose 95% interval excludes zero are shown; 19 pairs "
+              "qualified for the test and 5 cleared it."])
+
+    for tick in (3.6, 4.0, 4.4, 4.8):
+        p.append(L(X(tick), top - 20, X(tick), top + len(shown) * rowh - 22, GRID))
+        p.append(T(X(tick), top + len(shown) * rowh - 4, f"{tick:.1f}", 10.5,
                    MUTED, anchor="middle"))
-    p.append(T((x0 + x1) / 2, top + len(shown) * rowh + 18,
-               "difference in mean rating (stars)", 11, MUTED, anchor="middle"))
+    p.append(T((x0 + x1) / 2, top + len(shown) * rowh + 16,
+               "mean rating of the shops beside that boundary", 11, MUTED,
+               anchor="middle"))
 
     for i, r in enumerate(shown):
         y = top + i * rowh
-        lo = max(abs(r["d"]) - 1.96 * r["se"], 0)
-        h_ = abs(r["d"]) + 1.96 * r["se"]
         low, high = (r["a"], r["b"]) if r["ma"] < r["mb"] else (r["b"], r["a"])
         lowm, highm = (r["ma"], r["mb"]) if r["ma"] < r["mb"] else (r["mb"], r["ma"])
         ln, hn = (r["na"], r["nb"]) if r["ma"] < r["mb"] else (r["nb"], r["na"])
-        p.append(T(x0 - 16, y - 4, f"{low[:22]}  {lowm:.2f}", 11.5, ACCENT,
+        p.append(L(X(lowm), y, X(highm), y, BASELINE, 3))
+        p.append(C(X(lowm), y, 7, ACCENT))
+        p.append(C(X(highm), y, 7, HUE))
+        p.append(T(X(lowm) - 14, y + 4, f"{low[:26]} {lowm:.2f}", 11.5, ACCENT,
                    anchor="end", weight="600"))
-        p.append(T(x0 - 16, y + 11, f"{high[:22]}  {highm:.2f}", 11.5, HUE,
-                   anchor="end"))
-        p.append(T(x0 - 16, y + 25, f"n={ln} vs {hn}", 10, MUTED, anchor="end"))
-        p.append(L(X(lo), y + 4, X(h_), y + 4, INK2, 2))
-        for end in (lo, h_):
-            p.append(L(X(end), y, X(end), y + 8, INK2, 2))
-        p.append(R(X(abs(r["d"])) - 4.5, y - 0.5, 9, 9, INK, rx=2))
-        p.append(T(X(h_) + 12, y + 8, f"{abs(r['d']):.2f}", 11.5, INK, weight="600"))
+        p.append(T(X(highm) + 14, y + 4, f"{high[:26]} {highm:.2f}", 11.5, HUE,
+                   weight="600"))
+        p.append(T(X((lowm + highm) / 2), y - 13,
+                   f"{abs(r['d']):.2f} stars apart", 10.5, INK2, anchor="middle"))
+        p.append(T(x0 - 14, y + 20, f"n={ln} vs {hn}", 9.5, MUTED, anchor="end"))
 
     y = top + len(shown) * rowh + 52
     p.append(L(56, y, w - 56, y, GRID)); y += 28
-    p.append(T(56, y, "Every pair above is in London, and that is the method, not "
-                      "a finding about London.", 14, INK, weight="600"))
+    p.append(T(56, y, "THE DECISION: a 4 in one borough is not a 4 in the next, and "
+                      "the FSA calls this a national scheme.", 14, INK, weight="600"))
     p.append(T(56, y + 24,
-               "150 m only finds neighbours across a boundary where shops are "
-               "dense, so the design currently reaches inner-city borders and "
-               "almost nowhere else.", 12, INK2))
-    p.append(T(56, y + 46,
-               "NOT CONTROLLED FOR: business-type mix. If one side is takeaways "
-               "and the other supermarkets, that alone moves the mean.", 12, INK2))
-    p.append(T(56, y + 64,
-               "Matching on BusinessType is the next refinement; until then these "
-               "gaps are suggestive, not attributable. See D1.", 12, INK2))
+               "This is the calibration check nobody publishes. It names which "
+               "authority pairs to send a joint inspection exercise to, and the "
+               "component scores say what to", 12, INK2))
+    p.append(T(56, y + 42,
+               "calibrate on. Every pair here is in London because 150 m only finds "
+               "cross-boundary neighbours where shops are dense.", 12, INK2))
+    p.append(T(56, y + 66,
+               "NOT CONTROLLED FOR: business-type mix. Matching on BusinessType is "
+               "the next refinement; until then these gaps are suggestive.", 12, MUTED))
     save(p, "boundary-discontinuity.svg", w, h)
+
+
+def chart_rating_age(rated):
+    """How old is the sticker in the window?
+
+    The single most decision-shaped number in this archive, and it needs one
+    capture. A rating is displayed with no date on it, so a customer reading a 5
+    cannot tell whether it was earned last month or in 2019.
+    """
+    import datetime
+    months = collections.Counter()
+    for per_auth in rated.values():
+        for month, n in per_auth.items():
+            months[month] += n
+    total = sum(months.values())
+    if not total:
+        return
+
+    def age(month):
+        y, m = map(int, month.split("-"))
+        return (TODAY - datetime.date(y, m, 15)).days / 365
+
+    order = ["under 1 year", "1-2 years", "2-3 years", "3-5 years", "over 5 years"]
+    cols = [HUE, HUE_SOFT, DEAD, ACCENT, ACCENT]
+    buckets = collections.Counter()
+    for month, n in months.items():
+        a = age(month)
+        buckets[order[0] if a < 1 else order[1] if a < 2 else order[2] if a < 3
+                else order[3] if a < 5 else order[4]] += n
+
+    stale = buckets["3-5 years"] + buckets["over 5 years"]
+    w, h = 940, 516
+    p = head(w, h, f"One in six window stickers is three years old or more",
+             f"Age of the rating currently displayed, across {total:,} rated "
+             f"establishments. The sticker carries no date.",
+             ["A 5 awarded last month and a 5 awarded in 2019 are the same green "
+              "sticker in the window, and the customer cannot tell them apart.",
+              "Computed from RatingDate, which every record carries — one capture, "
+              "no waiting."])
+
+    x0, bar_w = 300, 470
+    for i, label in enumerate(order):
+        y = 176 + i * 40
+        n = buckets[label]
+        p.append(T(x0 - 16, y + 13, label, 12.5, INK, anchor="end",
+                   weight="600" if i >= 3 else "normal"))
+        p.append(R(x0, y, bar_w * n / total, 17, cols[i], rx=4))
+        p.append(T(x0 + bar_w * n / total + 10, y + 13,
+                   f"{n:,}  \u00b7  {n/total:.1%}", 11.5, INK2))
+
+    y = 176 + len(order) * 40 + 18
+    p.append(L(56, y, w - 56, y, GRID)); y += 28
+    p.append(T(56, y, f"{stale:,} establishments ({stale/total:.1%}) display a rating "
+                      f"awarded three or more years ago.", 14, INK, weight="600"))
+    p.append(T(56, y + 24,
+               f"{buckets['over 5 years']:,} of them ({buckets['over 5 years']/total:.1%}) "
+               f"are showing one earned more than five years ago.", 12, INK2))
+    p.append(T(56, y + 46,
+               "THE DECISION: whether the displayed rating should carry its date. "
+               "That is an FSA scheme choice, and this is the number it turns on.",
+               12, INK, weight="600"))
+    save(p, "rating-age.svg", w, h)
+
 
 
 def main():
@@ -385,6 +442,7 @@ def main():
     chart_inspection_recency(auth, ratings)
     chart_what_it_can_answer(auth, ratings)
     chart_boundary()
+    chart_rating_age(rated)
 
 
 if __name__ == "__main__":
