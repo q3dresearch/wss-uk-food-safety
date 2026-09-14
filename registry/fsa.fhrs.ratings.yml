@@ -1,0 +1,1533 @@
+# Every food hygiene rating in the UK, and the one that was there before it.
+#
+# 613,146 ESTABLISHMENTS ACROSS 363 LOCAL AUTHORITIES, and the publisher keeps
+# no history of any of them. The record carries RatingValue and RatingDate --
+# what the rating is now and when it was set -- and nothing else. There is no
+# history, previous, prior or former field in the API, and web.archive.org holds
+# ZERO captures of these bulk files. So an establishment that went 5 to 1 to 5
+# is indistinguishable from one that has always been 5, and the 1 is gone.
+#
+# WHY THIS ONE AND NOT ANOTHER REGISTER. It was screened cohort-first: in one
+# sampled authority 36.9% of establishments were re-rated within twelve months
+# and the median rating is 1.4 years old, which scales to roughly 226,000 rating
+# events a year. The sibling repo wss-sponsor-licences watches 68 entities and
+# can therefore only ever produce one number; this watches ~613,000 and can
+# support real comparisons -- including across 363 authorities, which is a
+# control set rather than an anecdote.
+#
+# IDENTITY IS PUBLISHER-MINTED. FHRSID is a stable id, so none of the
+# name-and-town hashing the UK sponsor registers force, and a rename is not
+# mistaken for a departure.
+#
+# TWO SCHEMES, NEVER MERGE THEM. 331 authorities run FHRS and score 0-5 with
+# Hygiene, Structural and ConfidenceInManagement components. 32 Scottish
+# authorities run FHIS, whose vocabulary is Pass / Improvement Required / Pass
+# and Eat Safe / Awaiting Inspection, with NO component scores at all. A mean
+# rating computed across both is meaningless and the parser refuses to make one.
+#
+# EN-GB ONLY, DELIBERATELY. Welsh authorities also publish a cy-GB file. It is a
+# TRANSLATION of the same establishments, not additional ones, and capturing
+# both would silently double-count Wales.
+#
+# ADDRESSES ARE CAPTURED AND NOT PUBLISHED. AddressLine1/3/4 and PostCode are
+# present on roughly 80% of records and a home-based caterer's business address
+# is their home address. Captured verbatim because capture is the irreversible
+# step; the derived table keys on FHRSID and carries only the postcode district.
+source_id: fsa.fhrs.ratings
+status: active
+cadence: monthly
+schema_id: fsa-fhrs.v1
+
+publisher: Food Standards Agency
+publisher_tier: first_party
+destroys_own_history: true
+licence: "Open Government Licence v3.0 — https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+personal_data: parties_only
+storage: object
+# An unchanged authority still says "these 464 establishments still hold these
+# ratings on this date", which is the presence observation this archive is for.
+restate: every_capture
+# SIZE, NOT LICENCE. The Open Government Licence permits publishing every row;
+# ~613,000 establishments at six observations each is roughly 4 million rows a
+# capture, which is not a thing to put in git every month. The per-establishment
+# series goes to object storage and git keeps the authority-level aggregates,
+# which are what every question except "did THIS shop recover" is asked at.
+publish: aggregates
+aggregate_prefixes: ["authority:"]
+
+notes: >-
+  One XML per local authority, 363 of them, ~900 bytes per establishment for
+  roughly 550 MB a full capture. Each file carries its own Header with
+  ExtractDate, ItemCount and ReturnCode, so the parser can check the count it
+  parsed against the count the publisher declared rather than trusting its own
+  loop. Smallest authority is River Tees with 3 establishments and largest is
+  Birmingham with 10,221, so min_bytes can only be a floor for the smallest --
+  truncation of a large file is caught by max_shrink_pct, which the engine
+  applies per endpoint against that endpoint's own previous capture.
+
+endpoints:
+  # Buckinghamshire — 4,583 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS021en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cambridge City — 1,486 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS027en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Cambridgeshire — 794 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS028en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Fenland — 715 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS029en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Huntingdonshire — 1,536 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS030en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Cambridgeshire — 1,320 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS032en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cumberland — 2,779 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS055en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Westmorland and Furness — 3,156 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS056en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Amber Valley — 1,084 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS062en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bolsover — 744 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS063en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Chesterfield — 961 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS064en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Erewash — 944 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS066en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # High Peak — 898 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS067en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North East Derbyshire — 816 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS068en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Derbyshire — 879 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS069en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Derbyshire Dales — 915 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS070en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Devon — 1,550 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS072en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Exeter City — 1,127 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS073en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mid Devon — 779 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS074en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Devon — 1,482 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS075en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Hams — 1,096 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS077en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Teignbridge — 1,322 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS078en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Torridge — 770 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS080en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Devon — 631 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS081en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dorset — 5,162 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS085en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Eastbourne — 1,029 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS102en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hastings — 913 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS103en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lewes — 945 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS105en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rother — 1,029 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS106en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wealden — 1,374 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS107en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Basildon — 1,397 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS109en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Braintree — 1,275 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS110en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Brentwood — 754 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS111en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Castle Point — 537 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS112en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Chelmsford — 1,599 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS113en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Colchester — 1,642 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS114en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Epping Forest — 1,049 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS115en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Harlow — 695 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS116en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Maldon — 686 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS117en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rochford — 664 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS118en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tendring — 1,310 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS120en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Uttlesford — 835 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS122en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cheltenham — 1,081 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS124en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cotswold — 1,101 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS125en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Forest of Dean — 809 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS126en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Gloucester City — 1,068 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS127en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stroud — 1,074 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS128en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tewkesbury — 801 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS129en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Basingstoke and Deane — 1,290 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS131en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Hampshire — 1,094 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS132en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Eastleigh — 977 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS133en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Fareham — 802 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS134en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Gosport — 605 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS135en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hart — 632 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS136en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Havant — 1,061 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS137en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # New Forest — 1,587 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS138en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rushmoor — 706 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS140en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Test Valley — 1,065 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS142en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Winchester City — 1,193 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS143en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bromsgrove — 749 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS145en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Malvern Hills — 728 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS148en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Redditch — 482 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS149en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Worcester City — 826 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS151en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wychavon — 1,099 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS152en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wyre Forest — 746 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS153en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Broxbourne — 879 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS155en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dacorum — 1,287 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS156en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Hertfordshire — 1,415 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS157en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hertsmere — 842 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS158en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Hertfordshire — 1,131 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS159en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # St Albans City — 1,174 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS160en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stevenage — 683 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS161en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Three Rivers — 651 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS162en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Watford — 1,028 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS163en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Welwyn Hatfield — 762 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS164en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ashford — 1,264 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS179en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Canterbury City — 1,652 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS180en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dartford — 1,079 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS181en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dover — 1,212 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS182en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Gravesham — 830 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS184en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Maidstone — 1,452 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS185en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Sevenoaks — 953 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS187en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Folkestone and Hythe — 1,302 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS188en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Swale — 1,234 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS189en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Thanet — 1,524 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS190en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tonbridge and Malling — 1,057 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS191en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tunbridge Wells — 1,080 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS192en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Burnley — 883 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS196en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Chorley — 993 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS197en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Fylde — 843 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS198en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hyndburn — 769 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS199en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lancaster City — 1,172 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS200en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Pendle — 796 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS201en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Preston — 1,641 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS202en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ribble Valley — 652 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS203en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rossendale — 690 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS204en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Ribble — 835 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS205en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Lancashire — 942 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS206en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wyre — 1,040 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS207en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Blaby — 674 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS209en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Charnwood — 1,479 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS210en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Harborough — 775 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS211en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hinckley and Bosworth — 921 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS212en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Melton — 541 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS214en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North West Leicestershire — 953 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS215en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Oadby and Wigston — 410 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS216en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Boston — 648 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS219en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Lindsey — 2,345 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS220en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lincoln City — 1,118 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS221en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Kesteven — 969 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS222en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Holland — 810 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS223en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Kesteven — 1,196 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS224en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Lindsey — 884 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS225en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Breckland — 1,273 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS227en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Broadland — 963 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS228en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Great Yarmouth — 1,095 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS229en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # King's Lynn and West Norfolk — 1,507 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS230en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Norfolk — 1,500 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS231en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Norwich City — 1,569 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS232en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Norfolk — 1,115 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS233en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Northamptonshire — 3,063 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS235en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Northamptonshire — 4,059 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS236en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Yorkshire — 7,084 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS250en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ashfield — 966 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS259en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bassetlaw — 1,084 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS260en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Broxtowe — 814 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS261en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Gedling — 839 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS262en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mansfield — 904 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS263en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Newark and Sherwood — 1,155 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS264en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rushcliffe — 920 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS266en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cherwell — 1,335 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS268en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Oxford City — 1,535 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS269en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Oxfordshire — 1,260 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS270en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Vale of White Horse — 1,053 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS271en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Oxfordshire — 1,131 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS272en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Somerset — 6,099 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS281en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cannock Chase — 831 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS287en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Staffordshire — 1,217 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS288en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lichfield — 896 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS289en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Newcastle-Under-Lyme — 989 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS290en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Staffordshire — 748 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS291en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stafford — 1,131 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS292en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Staffordshire Moorlands — 865 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS293en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tamworth — 558 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS295en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Babergh — 879 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS297en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Suffolk — 1,646 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS298en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ipswich — 1,116 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS299en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mid Suffolk — 861 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS300en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Suffolk — 2,494 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS302en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Elmbridge — 1,120 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS305en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Epsom and Ewell — 561 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS306en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Guildford — 1,148 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS307en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mole Valley — 773 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS308en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Reigate and Banstead — 1,108 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS309en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Runnymede — 706 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS310en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Spelthorne — 780 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS311en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Surrey Heath — 680 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS312en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tandridge — 697 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS313en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Waverley — 1,058 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS314en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Woking — 778 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS315en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Warwickshire — 672 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS317en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Nuneaton and Bedworth — 925 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS318en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rugby — 928 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS319en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stratford-on-Avon — 1,395 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS320en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Warwick — 1,407 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS321en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Adur — 464 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS323en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Arun — 1,348 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS324en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Chichester — 1,450 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS325en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Crawley — 966 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS326en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Horsham — 1,342 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS327en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mid Sussex — 1,356 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS328en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Worthing — 1,017 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS329en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Isles of Scilly — 130 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS336en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Barnsley — 1,890 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS401en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Birmingham — 10,221 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS402en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bolton — 2,419 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS403en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bradford — 4,664 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS404en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bury — 1,229 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS405en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Calderdale — 1,914 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS406en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Coventry — 3,023 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS407en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Doncaster — 2,801 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS408en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dudley — 2,683 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS409en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Gateshead — 1,650 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS410en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Kirklees — 3,863 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS411en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Knowsley — 820 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS412en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Leeds — 7,419 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS413en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Liverpool — 4,601 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS414en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Manchester — 6,425 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS415en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Newcastle Upon Tyne — 2,713 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS416en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Tyneside — 1,499 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS417en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Oldham — 1,894 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS418en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rochdale — 1,889 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS419en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rotherham — 2,201 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS420en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # St Helens — 1,373 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS421en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Salford — 2,101 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS422en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Sandwell — 2,736 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS423en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Sefton — 2,383 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS424en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Sheffield — 4,870 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS425en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Solihull — 1,400 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS426en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Tyneside — 1,036 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS427en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stockport — 2,730 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS428en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Sunderland — 2,324 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS429en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tameside — 1,694 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS430en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Trafford — 2,217 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS431en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wakefield — 3,049 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS432en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Walsall — 2,183 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS433en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wigan — 2,582 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS434en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wirral — 2,352 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS435en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wolverhampton — 2,164 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS436en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Barking and Dagenham — 1,465 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS501en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Barnet — 2,854 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS502en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bexley — 1,769 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS503en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Brent — 2,490 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS504en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bromley — 2,470 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS505en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Camden — 4,279 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS506en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Croydon — 3,124 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS507en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # City of London Corporation — 1,844 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS508en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ealing — 3,813 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS509en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Enfield — 2,405 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS510en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Greenwich — 2,418 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS511en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hackney — 2,429 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS512en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hammersmith and Fulham — 2,014 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS513en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Haringey — 1,951 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS514en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Harrow — 1,904 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS515en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Havering — 1,996 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS516en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hillingdon — 2,237 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS517en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hounslow — 2,347 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS518en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Islington — 2,610 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS519en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Kensington and Chelsea — 2,004 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS520en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Kingston-Upon-Thames — 1,439 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS521en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lambeth — 2,659 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS522en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lewisham — 2,482 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS523en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Merton — 1,592 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS524en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Newham — 2,668 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS525en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Redbridge — 2,200 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS526en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Richmond-Upon-Thames — 1,586 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS527en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Southwark — 3,325 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS528en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Sutton — 1,323 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS529en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Tower Hamlets — 3,185 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS530en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Waltham Forest — 1,981 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS531en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wandsworth — 2,913 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS532en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Westminster — 5,732 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS533en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Conwy — 1,610 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS550en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Anglesey — 770 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS551en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Blaenau Gwent — 674 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS552en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bridgend — 1,367 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS553en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Gwynedd — 2,115 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS554en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Caerphilly — 1,566 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS555en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cardiff — 3,478 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS556en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ceredigion — 1,087 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS557en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Carmarthenshire — 2,207 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS558en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Denbighshire — 1,158 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS559en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Flintshire — 1,317 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS560en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Merthyr Tydfil — 582 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS561en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Monmouthshire — 1,105 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS562en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Neath Port Talbot — 1,193 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS563en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Newport — 1,359 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS564en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Pembrokeshire — 2,264 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS565en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Powys — 2,601 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS566en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rhondda Cynon Taf — 2,027 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS567en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Swansea — 2,449 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS568en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Torfaen — 797 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS569en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Vale of Glamorgan — 1,329 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS570en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wrexham — 1,215 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS571en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hull and Goole Port — 5 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS626en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # River Tees — 3 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS648en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bedford — 1,659 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS701en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Central Bedfordshire — 1,711 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS702en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cheshire East — 3,123 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS703en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cheshire West and Chester — 2,949 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS704en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Cornwall — 5,389 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS705en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Durham — 4,636 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS706en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Northumberland — 3,516 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS707en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Shropshire — 3,124 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS708en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wiltshire — 4,262 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS709en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Aberdeen City — 2,207 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS760en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Aberdeenshire — 2,781 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS761en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Angus — 1,043 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS762en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Argyll and Bute — 1,272 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS763en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Ayrshire — 1,151 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS764en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Ayrshire — 1,374 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS765en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Ayrshire — 1,035 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS766en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Scottish Borders — 1,643 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS767en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Clackmannanshire — 498 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS768en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Dunbartonshire — 720 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS769en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dumfries and Galloway — 2,719 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS770en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Dunbartonshire — 704 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS771en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Dundee City — 1,404 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS772en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Edinburgh (City of) — 5,132 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS773en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Falkirk — 1,225 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS774en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Fife — 5,051 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS775en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Glasgow City — 6,632 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS776en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Highland — 6,135 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS777en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Inverclyde — 632 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS778en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Lanarkshire — 2,637 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS779en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Lanarkshire — 2,469 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS780en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Lothian — 881 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS781en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Lothian — 1,147 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS782en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Midlothian — 675 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS783en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Moray — 1,132 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS784en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Orkney Islands — 464 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS785en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Perth and Kinross — 1,981 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS786en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Renfrewshire — 646 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS787en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Renfrewshire — 1,516 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS788en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Shetland Islands — 280 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS789en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stirling — 1,248 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS790en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Comhairle nan Eilean Siar (Western Isles) — 582 establishments, FHIS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS791en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Antrim and Newtownabbey — 1,104 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS801en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Ards and North Down — 1,295 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS802en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Armagh City, Banbridge and Craigavon — 1,899 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS803en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mid and East Antrim — 1,170 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS804en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Causeway Coast and Glens — 1,471 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS805en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Belfast City — 3,180 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS807en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Lisburn and Castlereagh City — 919 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS809en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Mid Ulster — 1,380 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS811en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Derry City and Strabane — 1,361 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS813en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Newry, Mourne and Down — 1,730 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS814en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Fermanagh and Omagh — 1,445 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS816en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bristol — 4,492 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS855en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # South Gloucestershire — 2,119 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS856en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bath and North East Somerset — 1,845 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS857en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Somerset — 1,726 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS858en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hartlepool — 770 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS859en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Redcar and Cleveland — 1,230 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS860en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Middlesbrough — 1,164 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS861en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stockton On Tees — 1,573 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS862en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # East Riding of Yorkshire — 3,192 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS863en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North Lincolnshire — 1,480 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS864en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # North East Lincolnshire — 1,701 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS865en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Hull City — 2,301 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS866en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Isle of Wight — 1,704 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS867en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # York — 2,186 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS868en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Luton — 1,730 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS869en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Milton Keynes — 2,521 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS870en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Derby City — 2,275 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS871en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bournemouth, Christchurch and Poole — 3,558 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS872en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Darlington — 922 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS874en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Brighton and Hove — 2,998 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS875en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Portsmouth — 1,804 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS876en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Southampton — 1,705 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS877en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Leicester City — 3,388 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS878en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Rutland — 464 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS879en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Stoke-On-Trent — 2,248 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS880en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Swindon — 1,667 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS881en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Bracknell Forest — 802 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS882en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # West Berkshire — 1,273 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS883en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Reading — 1,502 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS884en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Slough — 1,018 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS885en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Windsor and Maidenhead — 1,611 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS886en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Wokingham — 1,121 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS887en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Peterborough City — 2,013 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS888en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Halton — 904 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS889en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Warrington — 1,728 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS890en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Plymouth City — 1,802 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS891en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Torbay — 1,522 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS892en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Southend-On-Sea — 1,480 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS893en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Thurrock — 1,330 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS894en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Herefordshire — 1,777 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS895en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Medway — 2,134 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS896en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Blackburn — 1,321 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS897en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Blackpool — 1,696 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS898en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Nottingham City — 3,047 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS899en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+  # Telford and Wrekin Council — 1,494 establishments, FHRS
+  - url: "https://ratings.food.gov.uk/api/open-data-files/FHRS900en-GB.xml"
+    delay_seconds: 2
+    timeout_seconds: 120
+
+gates:
+  expect_status: 200
+  # River Tees publishes 3 establishments. A floor can only be set for the
+  # smallest file in the set; everything else leans on must_contain and on
+  # max_shrink_pct, which is evaluated per endpoint.
+  min_bytes: 600
+  content_type_any: [xml]
+  # ReturnCode is the publisher's own verdict on the extract. Gating on the
+  # STRUCTURE (a well-formed envelope) would pass a file that says it failed,
+  # which is the shape of every bad capture this fleet has had.
+  must_contain: ["<ReturnCode>Success</ReturnCode>", "<EstablishmentDetail>"]
+  max_shrink_pct: 25
