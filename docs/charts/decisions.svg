@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="776" viewBox="0 0 940 776">
+<rect x="0.0" y="0.0" width="940.0" height="776.0" fill="#fcfcfb" rx="0"/>
+<text x="56.0" y="48.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="20" fill="#0b0b0b" text-anchor="start" font-weight="600">What you could decide with this, and when</text>
+<text x="56.0" y="74.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="13" fill="#52514e" text-anchor="start" font-weight="normal">Every decision below is one nobody can make from the FSA's own published data. The bar is how long the archive has to run first.</text>
+<text x="56.0" y="96.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">Three need no waiting at all, because RatingDate makes a single capture a survival curve.</text>
+<text x="56.0" y="112.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">The rest need the thing only time provides: a second look at the same 613,146 businesses.</text>
+<line x1="560.0" y1="184.0" x2="560.0" y2="600.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560.0" y="176.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#52514e" text-anchor="middle" font-weight="normal">today</text>
+<line x1="625.5" y1="184.0" x2="625.5" y2="600.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="625.5" y="176.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">+6mo</text>
+<line x1="691.0" y1="184.0" x2="691.0" y2="600.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="691.0" y="176.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">+12mo</text>
+<line x1="756.5" y1="184.0" x2="756.5" y2="600.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="756.5" y="176.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">+18mo</text>
+<line x1="822.0" y1="184.0" x2="822.0" y2="600.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="822.0" y="176.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="middle" font-weight="normal">+24mo</text>
+<text x="56.0" y="206.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Should the displayed rating carry its DATE?</text>
+<text x="56.0" y="223.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#2a78d6" text-anchor="start" font-weight="600">Food Standards Agency</text>
+<text x="56.0" y="238.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">91,297 stickers (17%) are 3+ years old</text>
+<circle cx="560.0" cy="210.0" r="8.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="576.0" y="214.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#2a78d6" text-anchor="start" font-weight="600">available now</text>
+<text x="56.0" y="266.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">What is the conversation with a 1-rated operator about?</text>
+<text x="56.0" y="283.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#2a78d6" text-anchor="start" font-weight="600">An environmental health officer</text>
+<text x="56.0" y="298.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">at a 1 the kitchen is as clean as at a 2 — management is the gap</text>
+<circle cx="560.0" cy="270.0" r="8.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="576.0" y="274.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#2a78d6" text-anchor="start" font-weight="600">available now</text>
+<text x="56.0" y="326.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Is my re-inspection interval defensible to a finance director?</text>
+<text x="56.0" y="343.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#2a78d6" text-anchor="start" font-weight="600">An EH manager</text>
+<text x="56.0" y="358.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">0.6 to 3.3 years across authorities in one scheme</text>
+<circle cx="560.0" cy="330.0" r="8.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="576.0" y="334.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#2a78d6" text-anchor="start" font-weight="600">available now</text>
+<text x="56.0" y="386.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Is a bad rating a warning, or a death sentence?</text>
+<text x="56.0" y="403.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#eb6834" text-anchor="start" font-weight="600">Food Standards Agency</text>
+<text x="56.0" y="418.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">18,249 carry one today; nothing records what happens next</text>
+<rect x="560.0" y="386.0" width="131.0" height="9.0" fill="#eb6834" rx="4"/>
+<text x="703.0" y="394.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">12 months</text>
+<text x="56.0" y="446.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">How long does a new business actually wait for me?</text>
+<text x="56.0" y="463.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#eb6834" text-anchor="start" font-weight="600">An EH manager</text>
+<text x="56.0" y="478.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">52,764 have never been inspected</text>
+<rect x="560.0" y="446.0" width="131.0" height="9.0" fill="#eb6834" rx="4"/>
+<text x="703.0" y="454.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">12 months</text>
+<text x="56.0" y="506.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Is the scheme being reset by re-registration?</text>
+<text x="56.0" y="523.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#b8b6ad" text-anchor="start" font-weight="600">Food Standards Agency</text>
+<text x="56.0" y="538.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">the phoenix question — unaskable from any other source</text>
+<rect x="560.0" y="506.0" width="196.5" height="9.0" fill="#b8b6ad" rx="4"/>
+<text x="768.5" y="514.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">18 months</text>
+<text x="56.0" y="566.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Is the national rating distribution drifting upward?</text>
+<text x="56.0" y="583.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#b8b6ad" text-anchor="start" font-weight="600">Researchers, journalists</text>
+<text x="56.0" y="598.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10.5" fill="#898781" text-anchor="start" font-weight="normal">grade inflation is invisible without a baseline</text>
+<rect x="560.0" y="566.0" width="262.0" height="9.0" fill="#b8b6ad" rx="4"/>
+<text x="834.0" y="574.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">24 months</text>
+<line x1="56.0" y1="642.0" x2="884.0" y2="642.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56.0" y="670.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600">The cost of finding out is 574 MB a month and one HTTP request per local authority.</text>
+<text x="56.0" y="694.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">Open Government Licence v3.0. Nothing here is bought, scraped against a publisher's wishes, or reconstructable later — the window is the whole point.</text>
+</svg>

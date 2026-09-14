@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="708" viewBox="0 0 940 708">
+<rect x="0.0" y="0.0" width="940.0" height="708.0" fill="#fcfcfb" rx="0"/>
+<text x="56.0" y="48.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="20" fill="#0b0b0b" text-anchor="start" font-weight="600">What the publisher keeps, and what this keeps</text>
+<text x="56.0" y="74.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="13" fill="#52514e" text-anchor="start" font-weight="normal">613,146 food businesses across 363 local authorities and all four UK nations, captured monthly.</text>
+<text x="56.0" y="96.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">The FSA publishes the CURRENT rating and the date it was set. There is no history field anywhere in the record, and web.archive.org</text>
+<text x="56.0" y="112.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">holds zero captures of the bulk files. Everything below the line is unrecoverable once an inspector visits again.</text>
+<text x="620.0" y="188.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="middle" font-weight="600">ratings.food.gov.uk</text>
+<text x="790.0" y="188.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#2a78d6" text-anchor="middle" font-weight="600">this archive</text>
+<text x="56.0" y="218.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal">What is this shop rated today?</text>
+<circle cx="620.0" cy="214.0" r="7.0" fill="#52514e" fill-opacity="1.0"/>
+<circle cx="790.0" cy="214.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="56.0" y="256.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal">When was that rating given?</text>
+<text x="56.0" y="271.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="start" font-weight="normal">RatingDate, on every record</text>
+<circle cx="620.0" cy="252.0" r="7.0" fill="#52514e" fill-opacity="1.0"/>
+<circle cx="790.0" cy="252.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="56.0" y="294.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal">Which of hygiene, fabric or management is weak?</text>
+<text x="56.0" y="309.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="start" font-weight="normal">three component scores, FHRS only</text>
+<circle cx="620.0" cy="290.0" r="7.0" fill="#52514e" fill-opacity="1.0"/>
+<circle cx="790.0" cy="290.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<line x1="56.0" y1="306.0" x2="884.0" y2="306.0" stroke="#c3c2b7" stroke-width="1"/>
+<text x="56.0" y="332.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">What was it rated BEFORE that?</text>
+<text x="56.0" y="347.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="start" font-weight="normal">the whole reason this exists</text>
+<circle cx="620.0" cy="328.0" r="7.0" fill="#fcfcfb" fill-opacity="1.0"/>
+<circle cx="620" cy="328" r="7" fill="none" stroke="#b8b6ad" stroke-width="1.5"/>
+<line x1="616.0" y1="324.0" x2="624.0" y2="332.0" stroke="#b8b6ad" stroke-width="1.5"/>
+<circle cx="790.0" cy="328.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="56.0" y="370.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">How long did it hold the previous rating?</text>
+<circle cx="620.0" cy="366.0" r="7.0" fill="#fcfcfb" fill-opacity="1.0"/>
+<circle cx="620" cy="366" r="7" fill="none" stroke="#b8b6ad" stroke-width="1.5"/>
+<line x1="616.0" y1="362.0" x2="624.0" y2="370.0" stroke="#b8b6ad" stroke-width="1.5"/>
+<circle cx="790.0" cy="366.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="56.0" y="408.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Did a 1-rated shop recover, or close?</text>
+<text x="56.0" y="423.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="start" font-weight="normal">18,249 carry a bad rating today</text>
+<circle cx="620.0" cy="404.0" r="7.0" fill="#fcfcfb" fill-opacity="1.0"/>
+<circle cx="620" cy="404" r="7" fill="none" stroke="#b8b6ad" stroke-width="1.5"/>
+<line x1="616.0" y1="400.0" x2="624.0" y2="408.0" stroke="#b8b6ad" stroke-width="1.5"/>
+<circle cx="790.0" cy="404.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="56.0" y="446.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">Did it reopen under a new registration?</text>
+<text x="56.0" y="461.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="start" font-weight="normal">FHRSID is minted per registration</text>
+<circle cx="620.0" cy="442.0" r="7.0" fill="#fcfcfb" fill-opacity="1.0"/>
+<circle cx="620" cy="442" r="7" fill="none" stroke="#b8b6ad" stroke-width="1.5"/>
+<line x1="616.0" y1="438.0" x2="624.0" y2="446.0" stroke="#b8b6ad" stroke-width="1.5"/>
+<circle cx="790.0" cy="442.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<text x="56.0" y="484.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600">How long did a new business wait to be inspected?</text>
+<text x="56.0" y="499.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="start" font-weight="normal">52,764 have never been inspected</text>
+<circle cx="620.0" cy="480.0" r="7.0" fill="#fcfcfb" fill-opacity="1.0"/>
+<circle cx="620" cy="480" r="7" fill="none" stroke="#b8b6ad" stroke-width="1.5"/>
+<line x1="616.0" y1="476.0" x2="624.0" y2="484.0" stroke="#b8b6ad" stroke-width="1.5"/>
+<circle cx="790.0" cy="480.0" r="7.0" fill="#2a78d6" fill-opacity="1.0"/>
+<line x1="56.0" y1="562.0" x2="884.0" y2="562.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56.0" y="590.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600">Everything above the line you can get from the FSA for free, today. Everything below it exists nowhere else.</text>
+<text x="56.0" y="614.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">The five open circles are not a gap in the FSA's publishing — they follow from the scheme's premise that the current rating IS the fact. This archive</text>
+<text x="56.0" y="632.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">is a bet that the trajectory matters too: a shop that went 1 then 5 and a shop that was always 5 are different risks.</text>
+</svg>

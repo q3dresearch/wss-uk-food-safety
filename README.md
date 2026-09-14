@@ -1,84 +1,109 @@
 # wss-uk-food-safety — UK Food Safety Ratings
 
-<!-- TODO: one paragraph. What does this capture, and why would the history
-     otherwise be lost? The "why" is the reason anyone will care: name the
-     window the publisher exposes (rolling counts, current status, today's
-     listing) and the fact that uncaptured days are gone for good. -->
-
-A GitHub Actions pipeline that captures every UK food hygiene rating **every month** and keeps
-the one that was there before it.
+A GitHub Actions pipeline that captures every UK food hygiene rating **every
+month** and keeps the one that was there before it.
 
 > **Status: pilot, first capture taken. Local only, not published.**
 >
-> One capture of 363 authority files is in. The second is what makes any of this
-> answerable — nothing below is a finding yet.
+> One capture of 363 authority files is in. Three questions are already
+> answered; the rest need a second look at the same 613,146 businesses.
 
-**A food hygiene rating is a regulator's verdict on one shop on one day, shown
-in the window and published nationally. The Food Standards Agency publishes the
-current rating and the date it was given — and nothing else.**
+**A food hygiene rating is a photograph presented as a live feed.**
 
-There is no history field in the record, no previous-rating endpoint, and
-**web.archive.org holds zero captures of the bulk data files**. An establishment
-that went 5, then 1, then 5 again is indistinguishable from one that has always
-been 5.
+613,146 UK food businesses display a sticker asserting *this place is a 5*.
+**16.8% of those ratings were awarded three or more years ago; 9.4% more than
+five.** The sticker carries no date, and the Food Standards Agency publishes
+only the current value — so when an inspector visits again, the rating that was
+there before is overwritten and gone.
 
-## What is being watched
+That is not an oversight in the FSA's publishing. It follows from the scheme's
+premise: the current rating **is** the fact, so history does not exist. This
+archive is a bet that the trajectory matters too — a shop that went 1 then 5 and
+a shop that was always 5 are different risks, and the scheme says they are
+identical.
+
+## What is kept, and by whom
 
 <p align="center">
-  <img src="examples/charts/nothing-is-kept.svg" width="900" alt="613,146 ratings with no history kept anywhere: 52,764 awaiting a first inspection, 14,778 rated 0-2, 3,471 Improvement Required in Scotland, and 381,728 holding a 5 whose previous value is unrecorded.">
+  <img src="examples/charts/what-is-kept.svg" width="900" alt="Eight questions about a food business: the FSA answers the first three (current rating, its date, the component scores) and none of the remaining five (the previous rating, how long it was held, whether a bad-rated shop recovered or closed, whether it reopened under a new registration, how long a new business waited).">
 </p>
 
-**613,146 establishments across 363 local authorities.** 52,764 have never been
-inspected. 18,249 are carrying a bad rating right now. In the authority sampled
-during screening, 36.9% were re-rated within twelve months, which scales to
-roughly **226,000 rating events a year**.
+Everything above the line is free from the FSA today. Everything below it exists
+nowhere else: no history field in the record, no previous-rating endpoint, and
+**zero captures of the bulk files in the Internet Archive**. Backfill was
+attempted and failed — 13 stray per-establishment records survive out of
+613,146, and the API ignores date parameters.
 
-That cohort is why this register was chosen over others. The sibling repository
-wss-sponsor-licences watches **68** entities and can only ever produce a single
-base rate; this one can answer questions about groups.
+## Answered already, from one capture
 
-## The rating in the window has no date on it
+`RatingDate` is on every record, so the age distribution of current ratings is a
+survival curve. Three findings needed no waiting.
+
+<p align="center">
+  <img src="examples/charts/rating-age.svg" width="900" alt="Age of the rating currently displayed: 42.8% under a year, 30.1% one to two years, 10.3% two to three, 7.5% three to five, and 9.4% over five years old.">
+</p>
+
+**91,297 establishments display a rating awarded three or more years ago.**
+Whether that sticker should carry its date is an FSA scheme decision, and this
+is the number it turns on.
+
+<p align="center">
+  <img src="examples/charts/what-drives-a-bad-rating.svg" width="900" alt="Component scores as a share of their own maximum by rating: between a 1 and a 2 the hygiene score is flat at 10.7 versus 10.5 and structural barely moves, while confidence in management halves from 19.6 to 9.4.">
+</p>
+
+**A 1 is a judgement about the operator, not a dirtier kitchen.** Between a 1 and
+a 2 the hygiene score is flat (10.7 vs 10.5); confidence in management halves
+(19.6 vs 9.4). That is a different remedy, and a different appeal, from a
+cleaning order.
 
 <p align="center">
   <img src="examples/charts/inspection-recency.svg" width="900" alt="Median age of the current rating, one dot per local authority, FHRS and FHIS drawn apart: within FHRS alone the median runs from 0.6 years in Stafford to 3.3 years in Liverpool.">
 </p>
 
-Within FHRS alone — same scheme, same rules — the median age of a current rating
-runs from **0.6 years (Stafford)** to **3.3 years (Liverpool, 4,601
-establishments)**. A rating is displayed with no indication of its age, so two
-shops both showing 5 may be nine months and four years apart in evidence.
+Within FHRS alone — same scheme, same rules — the median age of a rating runs
+from **0.6 years (Stafford)** to **3.3 years (Liverpool, 4,601 establishments)**.
+Scotland's FHIS is drawn apart and never averaged in; its extremes reach 7.1
+years (Highland).
 
-Scotland's FHIS is drawn separately and never averaged in: its values are
-`Pass` / `Improvement Required` / `Pass and Eat Safe`, with no component scores
-at all, and its extremes run to 7.1 years (Highland).
+## What listening unlocks
+
+<p align="center">
+  <img src="examples/charts/decisions.svg" width="900" alt="Seven decisions with named deciders against a timeline: three available today, two at twelve months, one at eighteen and one at twenty-four months.">
+</p>
+
+The cost of finding out is **574 MB a month** and one HTTP request per local
+authority, under the Open Government Licence.
+
+## A warning about the boundary result
+
+<p align="center">
+  <img src="examples/charts/boundary-components.svg" width="900" alt="The five significant boundary gaps split into component scores: structural is the largest of the three in four of the five pairs.">
+</p>
+
+Shops within 150 m of a council boundary are rated measurably differently from
+those just across it — five pairs with intervals excluding zero, up to 0.60
+stars. **Do not read that as councils marking inconsistently.** Splitting the
+gaps into components puts the largest difference in **Structural**, the
+building's physical fabric, in four of five pairs. The likeliest explanation is
+that the premises genuinely differ across the line. Matching on premises age and
+business type is what would settle it. See
+[`examples/boundary.py`](examples/boundary.py) and **D1** in
+[docs/research-questions.md](docs/research-questions.md).
 
 ## Eleven authority files are stale, and nothing says so
 
 Observations are dated by the file's own `ExtractDate`, not by when we fetched
-it. That immediately split the first capture across **five monthly partitions**:
-352 authorities were extracted in September 2026, and eleven were not.
+it, which split the first capture across five monthly partitions. Dumfries and
+Galloway's **2,719 establishments** are served as current from a **May** extract.
 
-| authority | extracted | establishments |
-| --- | --- | --- |
-| River Tees | 2026-04-22 | 3 |
-| Hull and Goole Port | 2026-04-28 | 5 |
-| **Dumfries and Galloway** | **2026-05-23** | **2,719** |
-| Castle Point | 2026-07-22 | 537 |
-| Tamworth | 2026-07-24 | 558 |
+## What this cannot do
 
-Dumfries and Galloway's 2,719 establishments are served as current from a May
-extract. Nothing on the FSA site flags it.
-
-## What it can answer, and when
-
-<p align="center">
-  <img src="examples/charts/what-it-can-answer.svg" width="900" alt="Each question against the cohort actually in that state: every one clears its own required sample size on the first capture, so the binding constraint is twelve months of capture rather than register size.">
-</p>
-
-Every question in [docs/research-questions.md](docs/research-questions.md)
-clears its own required sample size **on the first capture**. The binding
-constraint is time, not register size — which is the opposite of the sibling
-repo, and the reason this one was built.
+- **Map outbreaks.** UKHSA publishes nothing at premises level. The geocode on
+  every record is one side of a join whose other side does not exist.
+- **Score an individual premises' risk.** The cohorts support base rates and
+  group comparisons, not per-shop prediction.
+- **Reach Scotland's component scores.** FHIS publishes none, and its vocabulary
+  (`Pass`, `Improvement Required`) is never averaged with the 0–5 scale.
 
 ## The data you get
 

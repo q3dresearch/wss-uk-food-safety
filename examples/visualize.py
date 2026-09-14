@@ -594,6 +594,174 @@ def chart_component_gap():
                "calibration claim is safe.", 12, INK2))
     save(p, "boundary-components.svg", w, h)
 
+def chart_what_is_kept(auth, ratings):
+    """The orientation graphic: what the publisher keeps against what this keeps.
+
+    Every row is a fact about a real food business. The left column is what
+    ratings.food.gov.uk will tell you today; the right is what this archive will
+    tell you. Drawn because "the FSA does not publish history" is an abstraction
+    until you see which specific questions it closes.
+    """
+    national = collections.Counter()
+    for c in ratings.values():
+        national.update(c)
+    total = sum(national.values())
+    n_auth = len(auth)
+
+    ROWS = [
+        ("What is this shop rated today?", True, True, ""),
+        ("When was that rating given?", True, True, "RatingDate, on every record"),
+        ("Which of hygiene, fabric or management is weak?", True, True,
+         "three component scores, FHRS only"),
+        ("What was it rated BEFORE that?", False, True, "the whole reason this exists"),
+        ("How long did it hold the previous rating?", False, True, ""),
+        ("Did a 1-rated shop recover, or close?", False, True,
+         "18,249 carry a bad rating today"),
+        ("Did it reopen under a new registration?", False, True,
+         "FHRSID is minted per registration"),
+        ("How long did a new business wait to be inspected?", False, True,
+         "52,764 have never been inspected"),
+    ]
+    w = 940
+    top, rowh = 214, 38
+    h = top + len(ROWS) * rowh + 190
+    cx_fsa, cx_us = 620, 790
+
+    p = head(w, h, "What the publisher keeps, and what this keeps",
+             f"{total:,} food businesses across {n_auth} local authorities and all "
+             f"four UK nations, captured monthly.",
+             ["The FSA publishes the CURRENT rating and the date it was set. There "
+              "is no history field anywhere in the record, and web.archive.org",
+              "holds zero captures of the bulk files. Everything below the line is "
+              "unrecoverable once an inspector visits again."])
+
+    p.append(T(cx_fsa, top - 26, "ratings.food.gov.uk", 12, INK2, anchor="middle",
+               weight="600"))
+    p.append(T(cx_us, top - 26, "this archive", 12, HUE, anchor="middle", weight="600"))
+    split = None
+    for i, (q, fsa, us, note) in enumerate(ROWS):
+        y = top + i * rowh
+        if not fsa and split is None:
+            split = y - 22
+            p.append(L(56, split, w - 56, split, BASELINE))
+        p.append(T(56, y + 4, q, 12.5, INK if not fsa else INK2,
+                   weight="600" if not fsa else "normal"))
+        if note:
+            p.append(T(56, y + 19, note, 10, MUTED))
+        for cx, has in ((cx_fsa, fsa), (cx_us, us)):
+            if has:
+                p.append(C(cx, y, 7, HUE if cx == cx_us else INK2))
+            else:
+                p.append(C(cx, y, 7, SURFACE))
+                p.append(f'<circle cx="{cx}" cy="{y}" r="7" fill="none" '
+                         f'stroke="{DEAD}" stroke-width="1.5"/>')
+                p.append(L(cx - 4, y - 4, cx + 4, y + 4, DEAD, 1.5))
+
+    y = top + len(ROWS) * rowh + 44
+    p.append(L(56, y, w - 56, y, GRID)); y += 28
+    p.append(T(56, y, "Everything above the line you can get from the FSA for free, "
+                      "today. Everything below it exists nowhere else.", 14, INK,
+               weight="600"))
+    p.append(T(56, y + 24,
+               "The five open circles are not a gap in the FSA's publishing \u2014 "
+               "they follow from the scheme's premise that the current rating IS "
+               "the fact. This archive", 12, INK2))
+    p.append(T(56, y + 42,
+               "is a bet that the trajectory matters too: a shop that went 1 then 5 "
+               "and a shop that was always 5 are different risks.", 12, INK2))
+    save(p, "what-is-kept.svg", w, h)
+
+
+def chart_decisions(auth, ratings, rated):
+    """Who decides what, and when the evidence for it arrives.
+
+    The question a prospective reader actually has is not "is the data
+    interesting" but "what would I do with it, and how long until I can".
+    """
+    import datetime
+    months = collections.Counter()
+    for per_auth in rated.values():
+        for month, n in per_auth.items():
+            months[month] += n
+    total_rated = sum(months.values())
+    stale = 0
+    for month, n in months.items():
+        y_, m_ = map(int, month.split("-"))
+        if (TODAY - datetime.date(y_, m_, 15)).days / 365 >= 3:
+            stale += n
+    national = collections.Counter()
+    for c in ratings.values():
+        national.update(c)
+    bad = sum(national[k] for k in ("0", "1", "2")) + national.get("Improvement Required", 0)
+    waiting = national.get("AwaitingInspection", 0) + national.get("Awaiting Inspection", 0)
+
+    DEC = [
+        (0, "Food Standards Agency",
+         "Should the displayed rating carry its DATE?",
+         f"{stale:,} stickers ({stale/total_rated:.0%}) are 3+ years old"),
+        (0, "An environmental health officer",
+         "What is the conversation with a 1-rated operator about?",
+         "at a 1 the kitchen is as clean as at a 2 \u2014 management is the gap"),
+        (0, "An EH manager",
+         "Is my re-inspection interval defensible to a finance director?",
+         "0.6 to 3.3 years across authorities in one scheme"),
+        (12, "Food Standards Agency",
+         "Is a bad rating a warning, or a death sentence?",
+         f"{bad:,} carry one today; nothing records what happens next"),
+        (12, "An EH manager",
+         "How long does a new business actually wait for me?",
+         f"{waiting:,} have never been inspected"),
+        (18, "Food Standards Agency",
+         "Is the scheme being reset by re-registration?",
+         "the phoenix question \u2014 unaskable from any other source"),
+        (24, "Researchers, journalists",
+         "Is the national rating distribution drifting upward?",
+         "grade inflation is invisible without a baseline"),
+    ]
+    w = 940
+    top, rowh = 206, 60
+    h = top + len(DEC) * rowh + 150
+    x0, x1 = 560, w - 118
+
+    p = head(w, h, "What you could decide with this, and when",
+             "Every decision below is one nobody can make from the FSA's own "
+             "published data. The bar is how long the archive has to run first.",
+             ["Three need no waiting at all, because RatingDate makes a single "
+              "capture a survival curve.",
+              "The rest need the thing only time provides: a second look at the "
+              "same 613,146 businesses."])
+
+    def X(m):
+        return x0 + m / 24 * (x1 - x0)
+
+    for tick in (0, 6, 12, 18, 24):
+        p.append(L(X(tick), top - 22, X(tick), top + len(DEC) * rowh - 26, GRID))
+        p.append(T(X(tick), top - 30, "today" if tick == 0 else f"+{tick}mo", 10.5,
+                   INK2 if tick == 0 else MUTED, anchor="middle"))
+
+    for i, (months_, who, question, evidence) in enumerate(DEC):
+        y = top + i * rowh
+        col = HUE if months_ == 0 else ACCENT if months_ <= 12 else DEAD
+        p.append(T(56, y, question, 12.5, INK, weight="600"))
+        p.append(T(56, y + 17, who, 11, col, weight="600"))
+        p.append(T(56, y + 32, evidence, 10.5, MUTED))
+        if months_ == 0:
+            p.append(C(X(0), y + 4, 8, col))
+            p.append(T(X(0) + 16, y + 8, "available now", 11, col, weight="600"))
+        else:
+            p.append(R(X(0), y, max(X(months_) - X(0), 2), 9, col, rx=4))
+            p.append(T(X(months_) + 12, y + 8, f"{months_} months", 11, INK2))
+
+    y = top + len(DEC) * rowh + 16
+    p.append(L(56, y, w - 56, y, GRID)); y += 28
+    p.append(T(56, y, "The cost of finding out is 574 MB a month and one HTTP "
+                      "request per local authority.", 14, INK, weight="600"))
+    p.append(T(56, y + 24,
+               "Open Government Licence v3.0. Nothing here is bought, scraped "
+               "against a publisher's wishes, or reconstructable later \u2014 the "
+               "window is the whole point.", 12, INK2))
+    save(p, "decisions.svg", w, h)
+
 def main():
     auth, ratings, rated = load()
     if not auth:
@@ -607,6 +775,8 @@ def main():
     chart_rating_age(rated)
     chart_components(auth, ratings)
     chart_component_gap()
+    chart_what_is_kept(auth, ratings)
+    chart_decisions(auth, ratings, rated)
 
 
 if __name__ == "__main__":
