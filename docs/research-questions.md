@@ -81,9 +81,31 @@ cohort cannot support it is marked so here rather than discovered later.
 | # | question | status |
 | --- | --- | --- |
 | **G1** | Do ratings track deprivation? | **`source not yet added`** — needs an IMD lookup joined on postcode district. The join key exists on both sides; measure the overlap before believing it |
-| **G2** | Does inspection volume track council funding or EHO headcount? | **`source not yet added`** — MHCLG local authority finance and staffing. Would turn D2 from a description into an explanation |
-| **G3** | Do rating changes follow outbreaks? | **not observable** — UKHSA does not publish outbreaks at premises level, and will not |
+| **G2** | Does a council that prosecutes more also rate harder, or re-inspect faster? | **source found, and it is a LARDER.** The FSA's *Local Authority Food Law Enforcement returns* give 353 authorities × 36 columns a year, including hygiene emergency prohibitions, improvement notices, seizures, simple cautions, voluntary closures and **prosecutions concluded**. Same authority grain as this archive. Fetch once and re-derive — no capture |
+| **G3** | Do rating changes follow outbreaks? | **not observable** — UKHSA does not publish outbreaks at premises level, and will not. The geocode on every record is one side of a join whose other side does not exist |
 | **G4** | How many workers or customers does a closure affect? | **not observable** — the register names premises, never headcount or turnover |
+| **G5** | What happens at the FSA-regulated end — slaughterhouses, cutting plants, dairies? | **`source not yet added`, and it is a LARDER too.** FSA audits of approved meat establishments are published as a **dated monthly snapshot that is retained** (`meat-establishment-audits-as-at-1-august-2017.csv` and every month since). Premises-level outcomes, already archived by the publisher. A recipe |
+
+### A caveat on G2, and why the series matters
+
+The enforcement returns run **2016-17 to 2019-20 and then stop**. Four
+pre-COVID years, and the national record of food law enforcement ends there. So
+G2 is answerable against a six-year-old baseline, and *that the series stopped*
+is itself the finding — whether the FSA resumed publication elsewhere is the
+first thing to check before drawing anything from it.
+
+### Why not scrape search results
+
+Search-engine results were considered as a proxy for outbreak reporting and
+fail at step 1 of the screening sequence: `https://www.google.com/robots.txt`
+carries `Disallow: /search`. That is terminal and not a judgement call.
+
+Setting permission aside, a results page is not a record of anything. It is a
+ranking over documents that changes without notice and carries no provenance, so
+archiving it would archive the ranker's opinion rather than the world's facts.
+Where the underlying documents matter — a council's own enforcement register, a
+prosecution notice — they are fetchable directly, and that is both permitted and
+checkable.
 
 ## Who acts on these, and what changes
 
