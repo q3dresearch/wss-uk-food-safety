@@ -191,9 +191,15 @@ wss health --dry-run
 
 ## Licences
 
-Two separate files, on purpose: code is MIT ([LICENSE](LICENSE)); data
-(`raw/`, `manifest/`, `derived/`) is CC-BY-4.0
-([LICENSE-DATA](LICENSE-DATA)), citation in [CITATION.cff](CITATION.cff).
-Captured content remains subject to the publisher's own terms.
+**Data: Open Government Licence v3.0.** The ratings are published by the Food
+Standards Agency. Attribution is required:
 
-Topics: `git-scraping` · `open-data` · `point-in-time-data` · `dataset`
+> Contains public sector information licensed under the Open Government Licence
+> v3.0. Source: Food Standards Agency, https://ratings.food.gov.uk/open-data
+
+The OGL does not permit implying FSA endorsement of this repository, and none is
+claimed. Where this archive and ratings.food.gov.uk disagree about a current
+rating, **the FSA is right and this is stale** — the point of this repository is
+the values the FSA no longer shows, not the ones it does.
+
+**Code: MIT.** See [`LICENSE`](LICENSE) and [`LICENSE-DATA`](LICENSE-DATA).
