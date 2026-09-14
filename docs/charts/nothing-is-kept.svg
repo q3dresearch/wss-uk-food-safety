@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="500" viewBox="0 0 940 500">
+<rect x="0.0" y="0.0" width="940.0" height="500.0" fill="#fcfcfb" rx="0"/>
+<text x="56.0" y="48.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="20" fill="#0b0b0b" text-anchor="start" font-weight="600">613,146 ratings, and no record of the one before</text>
+<text x="56.0" y="74.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="13" fill="#52514e" text-anchor="start" font-weight="normal">The Food Standards Agency publishes the current rating and the date it was given. There is no history field anywhere in the record.</text>
+<text x="56.0" y="96.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">No previous-rating endpoint, and web.archive.org holds ZERO captures of the bulk data files.</text>
+<text x="56.0" y="112.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">So an establishment that went 5, then 1, then 5 again reads exactly like one that has always been 5, and the 1 is gone.</text>
+<text x="314.0" y="189.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="end" font-weight="600">awaiting a first inspection</text>
+<rect x="330.0" y="176.0" width="420.0" height="17.0" fill="#2a78d6" rx="4"/>
+<text x="760.0" y="189.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600">52,764</text>
+<text x="330.0" y="208.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#898781" text-anchor="start" font-weight="normal">how long have they waited? no published answer</text>
+<text x="314.0" y="243.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="end" font-weight="600">rated 0, 1 or 2 today</text>
+<rect x="330.0" y="230.0" width="117.6" height="17.0" fill="#eb6834" rx="4"/>
+<text x="457.6" y="243.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600">14,778</text>
+<text x="330.0" y="262.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#898781" text-anchor="start" font-weight="normal">does it recover, or close? nothing records which</text>
+<text x="314.0" y="297.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12.5" fill="#0b0b0b" text-anchor="end" font-weight="600">Improvement Required (Scotland)</text>
+<rect x="330.0" y="284.0" width="27.6" height="17.0" fill="#eb6834" rx="4"/>
+<text x="367.6" y="297.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="600">3,471</text>
+<text x="330.0" y="316.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#898781" text-anchor="start" font-weight="normal">the FHIS equivalent, on its own scale</text>
+<line x1="56.0" y1="354.0" x2="884.0" y2="354.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56.0" y="382.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600">18,249 establishments are carrying a bad rating right now, and 52,764 have never been inspected.</text>
+<text x="56.0" y="406.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">A further 381,728 hold a 5 today. The record says when it was given, never what it replaced.</text>
+<text x="56.0" y="428.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">That is the cohort. The sibling repository wss-sponsor-licences watches 68 entities and can only ever</text>
+<text x="56.0" y="446.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">produce one number; this one can answer questions about groups.</text>
+</svg>
