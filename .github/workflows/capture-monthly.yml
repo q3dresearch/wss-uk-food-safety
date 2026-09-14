@@ -8,7 +8,7 @@ name: capture-monthly
 
 on:
   schedule:
-    - cron: "10 22 * * 1" # Monday, off the hour — GitHub's scheduler is contended at :00
+    - cron: "10 22 5 * *" # the 5th, off the hour — monthly source, monthly capture
   workflow_dispatch:
 
 permissions:
@@ -67,7 +67,6 @@ jobs:
     # env:  (no credentials needed by this repo)
     # Add one line per authenticated source, matching the
     # `auth: {bearer_env: ...}` name in its registry entry, e.g.
-    # WSS_SOMEPUBLISHER_KEY: ${{ secrets.WSS_SOMEPUBLISHER_KEY }}
     # This is the one workflow edit a new *credential* requires — adding a
     # source never needs one.
     steps:
