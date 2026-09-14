@@ -354,18 +354,20 @@ def chart_boundary(_auth=None, _ratings=None):
 
     y = top + len(shown) * rowh + 52
     p.append(L(56, y, w - 56, y, GRID)); y += 28
-    p.append(T(56, y, "THE DECISION: a 4 in one borough is not a 4 in the next, and "
-                      "the FSA calls this a national scheme.", 14, INK, weight="600"))
+    p.append(T(56, y, "A gap this size is real. What causes it is NOT settled \u2014 "
+                      "see the component breakdown.", 14, INK, weight="600"))
     p.append(T(56, y + 24,
-               "This is the calibration check nobody publishes. It names which "
-               "authority pairs to send a joint inspection exercise to, and the "
-               "component scores say what to", 12, INK2))
+               "Decomposing these same gaps into Hygiene, Structural and Management "
+               "puts the largest difference in STRUCTURAL for four of the five pairs. "
+               "Structural is the", 12, INK2))
     p.append(T(56, y + 42,
-               "calibrate on. Every pair here is in London because 150 m only finds "
-               "cross-boundary neighbours where shops are dense.", 12, INK2))
+               "building's physical fabric, so the likeliest explanation is that the "
+               "premises genuinely differ across the line \u2014 not that the councils "
+               "mark differently.", 12, INK2))
     p.append(T(56, y + 66,
-               "NOT CONTROLLED FOR: business-type mix. Matching on BusinessType is "
-               "the next refinement; until then these gaps are suggestive.", 12, MUTED))
+               "Every pair here is in London, because 150 m only finds cross-boundary "
+               "neighbours where shops are dense. Business-type mix is still "
+               "uncontrolled.", 12, MUTED))
     save(p, "boundary-discontinuity.svg", w, h)
 
 
@@ -432,6 +434,166 @@ def chart_rating_age(rated):
 
 
 
+def chart_components(auth, ratings):
+    """What actually separates a 1 from a 2.
+
+    Each component is shown as a share of ITS OWN maximum, because the scales
+    differ -- Hygiene and Structural run to 25, Confidence in Management to 30 --
+    and plotting the raw numbers side by side would make management look worse
+    than it is by construction.
+
+    Higher is worse throughout.
+    """
+    MAXES = {"hygiene": 25, "structural": 25, "confidenceinmanagement": 30}
+    counts, totals = collections.Counter(), collections.defaultdict(collections.Counter)
+    for path in sorted(glob.glob(str(REPO / "derived" / "observations" / "*.csv.gz"))):
+        with io.TextIOWrapper(gzip.open(path, "rb"), encoding="utf-8", newline="") as fh:
+            for r in csv.DictReader(fh):
+                eid = r["entity_id"]
+                if ":rating:" not in eid:
+                    continue
+                rv = eid.split(":rating:")[1]
+                if r["metric"] == "establishments_listed":
+                    counts[rv] += int(r["value"])
+                elif r["metric"].startswith("score_"):
+                    totals[rv][r["metric"]] += int(r["value"])
+    ratings_shown = [v for v in ("0", "1", "2", "3", "4", "5") if counts.get(v)]
+    if not ratings_shown:
+        return
+
+    w, h = 940, 530
+    p = head(w, h, "A 1 is a judgement about the operator, not a dirtier kitchen",
+             "Each component as a share of its own maximum, by rating. Higher is "
+             "worse. FHRS only \u2014 Scotland publishes no component scores.",
+             ["Between a 1 and a 2 the Hygiene score barely moves and Structural "
+              "moves a little. Confidence in Management halves.",
+              "Scales differ (Hygiene and Structural to 25, Management to 30), so "
+              "raw scores are not comparable and shares are used."])
+
+    x0, colw = 190, 108
+    base, tall = 380, 200
+    cols = {"hygiene": HUE, "structural": HUE_SOFT, "confidenceinmanagement": ACCENT}
+    labels = {"hygiene": "Hygiene", "structural": "Structural",
+              "confidenceinmanagement": "Management"}
+    for g, rv in enumerate(ratings_shown):
+        gx = x0 + g * colw
+        n = counts[rv]
+        for k, (tag, col) in enumerate(cols.items()):
+            share = totals[rv][f"score_{tag}_total"] / n / MAXES[tag]
+            bh = share * tall
+            p.append(R(gx + k * 22, base - bh, 18, bh, col, rx=3))
+        p.append(T(gx + 33, base + 18, f"rated {rv}", 11.5, INK, anchor="middle",
+                   weight="600"))
+        p.append(T(gx + 33, base + 33, f"n={n:,}", 10, MUTED, anchor="middle"))
+    for frac in (0.25, 0.5, 0.75):
+        p.append(L(x0 - 24, base - frac * tall, w - 70, base - frac * tall, GRID))
+        p.append(T(x0 - 32, base - frac * tall + 4, f"{frac:.0%}", 10, MUTED,
+                   anchor="end"))
+    p.append(L(x0 - 24, base, w - 70, base, BASELINE))
+    lx = 190
+    for tag, col in cols.items():
+        p.append(R(lx, 150, 11, 11, col, rx=2))
+        p.append(T(lx + 16, 160, labels[tag], 11, INK2))
+        lx += 16 + len(labels[tag]) * 6.4 + 26
+
+    y = base + 66
+    p.append(L(56, y, w - 56, y, GRID)); y += 26
+    h1 = totals["1"]["score_hygiene_total"] / counts["1"]
+    h2 = totals["2"]["score_hygiene_total"] / counts["2"]
+    m1 = totals["1"]["score_confidenceinmanagement_total"] / counts["1"]
+    m2 = totals["2"]["score_confidenceinmanagement_total"] / counts["2"]
+    p.append(T(56, y, f"Hygiene at a 1 is {h1:.1f} and at a 2 is {h2:.1f}. "
+                      f"Management is {m1:.1f} and {m2:.1f}.", 14, INK, weight="600"))
+    p.append(T(56, y + 24,
+               "THE DECISION: what an enforcement conversation is about. If the "
+               "kitchen is equally clean at a 1 and a 2, the thing separating them "
+               "is the inspector's", 12, INK2))
+    p.append(T(56, y + 42,
+               "confidence in the operator \u2014 which is a different remedy, and a "
+               "different appeal, from a cleaning order.", 12, INK2))
+    save(p, "what-drives-a-bad-rating.svg", w, h)
+
+
+def chart_component_gap():
+    """Which component the cross-boundary gap actually sits in.
+
+    Built to test a hypothesis and it refuted it. The expectation was that
+    councils would disagree most on Confidence in Management, the most
+    discretionary component. The largest gap is STRUCTURAL in four of five
+    pairs -- the building's physical fabric -- which points at premises genuinely
+    differing across the line rather than at inconsistent marking.
+    """
+    import json
+    path = REPO / "examples" / "border_components.json"
+    if not path.is_file():
+        return
+    rows = json.loads(path.read_text())
+    order = ["hygiene", "structural", "confidenceinmanagement"]
+    key = {"hygiene": "hygiene", "structural": "structural",
+           "confidenceinmanagement": "management"}
+    labels = {"hygiene": "Hygiene", "structural": "Structural",
+              "confidenceinmanagement": "Management"}
+    cols = {"hygiene": HUE, "structural": ACCENT, "confidenceinmanagement": HUE_SOFT}
+
+    w = 940
+    top, rowh = 218, 76
+    h = top + len(rows) * rowh + 190
+    x0, x1 = 330, w - 150
+    hi = max(abs(r[key[t]]["d"]) + 1.96 * r[key[t]]["se"] for r in rows for t in order) * 1.06
+
+    p = head(w, h, "The gap is widest in the building, not the judgement",
+             "The same boundary pairs, with the rating difference split into its "
+             "three component scores. Higher is worse.",
+             ["Built to test whether councils disagree most on the DISCRETIONARY "
+              "component. They do not: Structural is the largest gap in four of "
+              "five pairs.",
+              "Structural is the premises' physical fabric, which is the one thing "
+              "150 m of distance does not guarantee is alike."])
+
+    def X(v):
+        return x0 + v / hi * (x1 - x0)
+
+    for tick in (0, 1, 2, 3):
+        if tick > hi:
+            continue
+        p.append(L(X(tick), top - 20, X(tick), top + len(rows) * rowh - 30, GRID))
+        p.append(T(X(tick), top + len(rows) * rowh - 12, str(tick), 10.5, MUTED,
+                   anchor="middle"))
+    p.append(T((x0 + x1) / 2, top + len(rows) * rowh + 8,
+               "difference in mean component score", 11, MUTED, anchor="middle"))
+
+    for i, r in enumerate(rows):
+        y = top + i * rowh
+        p.append(T(x0 - 16, y + 6, f"{r['a'][:20]} v {r['b'][:20]}", 11.5, INK,
+                   anchor="end", weight="600"))
+        p.append(T(x0 - 16, y + 22, f"n={r['na']} vs {r['nb']}", 9.5, MUTED,
+                   anchor="end"))
+        widest = max(order, key=lambda t: abs(r[key[t]]["d"]))
+        for k, tag in enumerate(order):
+            d = r[key[tag]]
+            yy = y - 8 + k * 16
+            sig = abs(d["d"]) - 1.96 * d["se"] > 0
+            p.append(L(X(0), yy, X(abs(d["d"])), yy,
+                       cols[tag] if sig else DEAD, 7 if tag == widest else 5))
+            p.append(T(X(abs(d["d"])) + 10, yy + 4,
+                       f"{labels[tag]} {abs(d['d']):.2f}{'' if sig else '  n.s.'}",
+                       10.5, INK if tag == widest else MUTED,
+                       weight="600" if tag == widest else "normal"))
+
+    y = top + len(rows) * rowh + 44
+    p.append(L(56, y, w - 56, y, GRID)); y += 28
+    p.append(T(56, y, "So the boundary gap is probably the buildings, not the "
+                      "inspectors.", 14, INK, weight="600"))
+    p.append(T(56, y + 24,
+               "This chart was built expecting the opposite. Structural is the "
+               "component least under an inspector's discretion and most determined "
+               "by what was built", 12, INK2))
+    p.append(T(56, y + 42,
+               "there \u2014 and it carries the widest gap. Matching on premises age "
+               "and business type is what would settle it; until then no "
+               "calibration claim is safe.", 12, INK2))
+    save(p, "boundary-components.svg", w, h)
+
 def main():
     auth, ratings, rated = load()
     if not auth:
@@ -443,6 +605,8 @@ def main():
     chart_what_it_can_answer(auth, ratings)
     chart_boundary()
     chart_rating_age(rated)
+    chart_components(auth, ratings)
+    chart_component_gap()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="530" viewBox="0 0 940 530">
+<rect x="0.0" y="0.0" width="940.0" height="530.0" fill="#fcfcfb" rx="0"/>
+<text x="56.0" y="48.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="20" fill="#0b0b0b" text-anchor="start" font-weight="600">A 1 is a judgement about the operator, not a dirtier kitchen</text>
+<text x="56.0" y="74.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="13" fill="#52514e" text-anchor="start" font-weight="normal">Each component as a share of its own maximum, by rating. Higher is worse. FHRS only — Scotland publishes no component scores.</text>
+<text x="56.0" y="96.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">Between a 1 and a 2 the Hygiene score barely moves and Structural moves a little. Confidence in Management halves.</text>
+<text x="56.0" y="112.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#898781" text-anchor="start" font-weight="normal">Scales differ (Hygiene and Structural to 25, Management to 30), so raw scores are not comparable and shares are used.</text>
+<rect x="190.0" y="237.4" width="18.0" height="142.6" fill="#2a78d6" rx="3"/>
+<rect x="212.0" y="227.3" width="18.0" height="152.7" fill="#9ec5f4" rx="3"/>
+<rect x="234.0" y="217.9" width="18.0" height="162.1" fill="#eb6834" rx="3"/>
+<text x="223.0" y="398.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="middle" font-weight="600">rated 0</text>
+<text x="223.0" y="413.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="middle" font-weight="normal">n=915</text>
+<rect x="298.0" y="294.2" width="18.0" height="85.8" fill="#2a78d6" rx="3"/>
+<rect x="320.0" y="285.9" width="18.0" height="94.1" fill="#9ec5f4" rx="3"/>
+<rect x="342.0" y="249.7" width="18.0" height="130.3" fill="#eb6834" rx="3"/>
+<text x="331.0" y="398.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="middle" font-weight="600">rated 1</text>
+<text x="331.0" y="413.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="middle" font-weight="normal">n=6,613</text>
+<rect x="406.0" y="296.0" width="18.0" height="84.0" fill="#2a78d6" rx="3"/>
+<rect x="428.0" y="275.6" width="18.0" height="104.4" fill="#9ec5f4" rx="3"/>
+<rect x="450.0" y="317.5" width="18.0" height="62.5" fill="#eb6834" rx="3"/>
+<text x="439.0" y="398.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="middle" font-weight="600">rated 2</text>
+<text x="439.0" y="413.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="middle" font-weight="normal">n=7,250</text>
+<rect x="514.0" y="309.2" width="18.0" height="70.8" fill="#2a78d6" rx="3"/>
+<rect x="536.0" y="306.5" width="18.0" height="73.5" fill="#9ec5f4" rx="3"/>
+<rect x="558.0" y="316.8" width="18.0" height="63.2" fill="#eb6834" rx="3"/>
+<text x="547.0" y="398.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="middle" font-weight="600">rated 3</text>
+<text x="547.0" y="413.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="middle" font-weight="normal">n=26,902</text>
+<rect x="622.0" y="345.1" width="18.0" height="34.9" fill="#2a78d6" rx="3"/>
+<rect x="644.0" y="330.2" width="18.0" height="49.8" fill="#9ec5f4" rx="3"/>
+<rect x="666.0" y="333.6" width="18.0" height="46.4" fill="#eb6834" rx="3"/>
+<text x="655.0" y="398.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="middle" font-weight="600">rated 4</text>
+<text x="655.0" y="413.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="middle" font-weight="normal">n=64,163</text>
+<rect x="730.0" y="364.9" width="18.0" height="15.1" fill="#2a78d6" rx="3"/>
+<rect x="752.0" y="359.4" width="18.0" height="20.6" fill="#9ec5f4" rx="3"/>
+<rect x="774.0" y="364.2" width="18.0" height="15.8" fill="#eb6834" rx="3"/>
+<text x="763.0" y="398.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11.5" fill="#0b0b0b" text-anchor="middle" font-weight="600">rated 5</text>
+<text x="763.0" y="413.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="middle" font-weight="normal">n=381,728</text>
+<line x1="166.0" y1="330.0" x2="870.0" y2="330.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="158.0" y="334.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">25%</text>
+<line x1="166.0" y1="280.0" x2="870.0" y2="280.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="158.0" y="284.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">50%</text>
+<line x1="166.0" y1="230.0" x2="870.0" y2="230.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="158.0" y="234.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="10" fill="#898781" text-anchor="end" font-weight="normal">75%</text>
+<line x1="166.0" y1="380.0" x2="870.0" y2="380.0" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="190.0" y="150.0" width="11.0" height="11.0" fill="#2a78d6" rx="2"/>
+<text x="206.0" y="160.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">Hygiene</text>
+<rect x="276.8" y="150.0" width="11.0" height="11.0" fill="#9ec5f4" rx="2"/>
+<text x="292.8" y="160.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">Structural</text>
+<rect x="382.8" y="150.0" width="11.0" height="11.0" fill="#eb6834" rx="2"/>
+<text x="398.8" y="160.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="11" fill="#52514e" text-anchor="start" font-weight="normal">Management</text>
+<line x1="56.0" y1="446.0" x2="884.0" y2="446.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56.0" y="472.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600">Hygiene at a 1 is 10.7 and at a 2 is 10.5. Management is 19.6 and 9.4.</text>
+<text x="56.0" y="496.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">THE DECISION: what an enforcement conversation is about. If the kitchen is equally clean at a 1 and a 2, the thing separating them is the inspector's</text>
+<text x="56.0" y="514.0" font-family='system-ui, -apple-system, "Segoe UI", sans-serif' font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">confidence in the operator — which is a different remedy, and a different appeal, from a cleaning order.</text>
+</svg>
