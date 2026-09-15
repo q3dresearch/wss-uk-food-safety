@@ -1,0 +1,214 @@
+{
+  "generated_at": "2026-09-15T13:15:08Z",
+  "note": "Inferred from the derived rows by `wss schema`, not hand-written. Regenerate after any derive.",
+  "sources": {
+    "fsa.fhrs.ratings": {
+      "source_id": "fsa.fhrs.ratings",
+      "schema_id": "fsa-fhrs.v1",
+      "cadence": "monthly",
+      "licence": "Open Government Licence v3.0 — https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "personal_data": "parties_only",
+      "storage": "object",
+      "publisher": "Food Standards Agency",
+      "publisher_tier": "first_party",
+      "endpoints": 363
+    }
+  },
+  "observations": {
+    "rows": 46466,
+    "columns": [
+      "series_id",
+      "entity_id",
+      "observed_at",
+      "captured_at",
+      "metric",
+      "value",
+      "unit",
+      "source_id",
+      "raw_ref",
+      "parser_version"
+    ],
+    "partitions": [
+      "2026-04.csv.gz",
+      "2026-05.csv.gz",
+      "2026-07.csv.gz",
+      "2026-08.csv.gz",
+      "2026-09.csv.gz"
+    ],
+    "series": {
+      "fsa.fhrs.ratings": {
+        "rows": 46466,
+        "entities": 39560,
+        "entity_id_samples": [
+          "authority:021",
+          "authority:021:rated:2005-09",
+          "authority:021:rated:2006-03"
+        ],
+        "metrics": [
+          "establishments_listed",
+          "extract_date",
+          "median_rating_date",
+          "name",
+          "new_rating_pending",
+          "score_confidenceinmanagement_total",
+          "score_hygiene_total",
+          "score_structural_total"
+        ]
+      }
+    },
+    "parser_versions": [
+      "3"
+    ]
+  },
+  "metrics": {
+    "establishments_listed": {
+      "rows": 39560,
+      "unit": "count",
+      "type": "number",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 39560,
+      "distinct_values": 1176,
+      "empty": 0,
+      "min": "1",
+      "max": "10221",
+      "samples": [
+        "1",
+        "10",
+        "100"
+      ]
+    },
+    "extract_date": {
+      "rows": 363,
+      "unit": "date",
+      "type": "date",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 363,
+      "distinct_values": 20,
+      "empty": 0,
+      "min": "2026-04-22",
+      "max": "2026-09-13",
+      "samples": [
+        "2026-04-22",
+        "2026-04-28",
+        "2026-05-23"
+      ]
+    },
+    "median_rating_date": {
+      "rows": 363,
+      "unit": "date",
+      "type": "date",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 363,
+      "distinct_values": 187,
+      "empty": 0,
+      "min": "2019-08-22",
+      "max": "2026-02-18",
+      "samples": [
+        "2019-08-22",
+        "2019-10-08",
+        "2020-02-10"
+      ]
+    },
+    "name": {
+      "rows": 363,
+      "unit": "text",
+      "type": "text",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 363,
+      "distinct_values": 363,
+      "empty": 0,
+      "samples": [
+        "Aberdeen City",
+        "Aberdeenshire",
+        "Adur"
+      ]
+    },
+    "new_rating_pending": {
+      "rows": 363,
+      "unit": "count",
+      "type": "number",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 363,
+      "distinct_values": 41,
+      "empty": 0,
+      "min": "0",
+      "max": "81",
+      "samples": [
+        "0",
+        "1",
+        "10"
+      ]
+    },
+    "score_confidenceinmanagement_total": {
+      "rows": 1818,
+      "unit": "count",
+      "type": "number",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 1818,
+      "distinct_values": 562,
+      "empty": 0,
+      "min": "0",
+      "max": "15565",
+      "samples": [
+        "0",
+        "10",
+        "100"
+      ]
+    },
+    "score_hygiene_total": {
+      "rows": 1818,
+      "unit": "count",
+      "type": "number",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 1818,
+      "distinct_values": 498,
+      "empty": 0,
+      "min": "0",
+      "max": "13635",
+      "samples": [
+        "0",
+        "10",
+        "100"
+      ]
+    },
+    "score_structural_total": {
+      "rows": 1818,
+      "unit": "count",
+      "type": "number",
+      "series": [
+        "fsa.fhrs.ratings"
+      ],
+      "entities": 1818,
+      "distinct_values": 574,
+      "empty": 0,
+      "min": "0",
+      "max": "16325",
+      "samples": [
+        "0",
+        "10",
+        "100"
+      ]
+    }
+  },
+  "raw": {
+    "files": 0,
+    "bytes_on_disk": 0,
+    "capture_dates": 1,
+    "first_capture": "2026-09-14T05:11:11Z",
+    "last_capture": "2026-09-14T05:29:57Z"
+  }
+}
