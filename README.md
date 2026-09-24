@@ -189,6 +189,66 @@ wss health --dry-run
    workflow), confirm the bot's data commit lands, then let the cron take
    over.
 
+## Figures
+
+Built by the scripts in [`examples/`](examples/), from the captures in this
+repository. Each caption is the figure's own title — nothing is restated here
+that the figure does not already say.
+
+**The gap is widest in the building, not the judgement**
+
+![The gap is widest in the building, not the judgement](examples/charts/boundary-components.svg)
+
+The same boundary pairs, with the rating difference split into its three component scores. Higher is worse.
+
+**The same street, rated half a star apart**
+
+![The same street, rated half a star apart](examples/charts/boundary-discontinuity.svg)
+
+Mean hygiene rating of shops within 150 m of a council boundary, compared with the shops just across it.
+
+**What you could decide with this, and when**
+
+![What you could decide with this, and when](examples/charts/decisions.svg)
+
+Every decision below is one nobody can make from the FSA's own published data. The bar is how long the archive has to run first.
+
+**How long ago was the rating in the window actually given?**
+
+![How long ago was the rating in the window actually given?](examples/charts/inspection-recency.svg)
+
+Median age of the current rating, one dot per local authority. The two schemes are drawn apart, never averaged.
+
+**613,146 ratings, and no record of the one before**
+
+![613,146 ratings, and no record of the one before](examples/charts/nothing-is-kept.svg)
+
+The Food Standards Agency publishes the current rating and the date it was given. There is no history field anywhere in the record.
+
+**One in six window stickers is three years old or more**
+
+![One in six window stickers is three years old or more](examples/charts/rating-age.svg)
+
+Age of the rating currently displayed, across 542,983 rated establishments. The sticker carries no date.
+
+**A 1 is a judgement about the operator, not a dirtier kitchen**
+
+![A 1 is a judgement about the operator, not a dirtier kitchen](examples/charts/what-drives-a-bad-rating.svg)
+
+Each component as a share of its own maximum, by rating. Higher is worse. FHRS only — Scotland publishes no component scores.
+
+**What the publisher keeps, and what this keeps**
+
+![What the publisher keeps, and what this keeps](examples/charts/what-is-kept.svg)
+
+613,146 food businesses across 363 local authorities and all four UK nations, captured monthly.
+
+**The cohort is big enough to answer the questions**
+
+![The cohort is big enough to answer the questions](examples/charts/what-it-can-answer.svg)
+
+Each question against the number of establishments actually in that state today, and the precision that buys after one year of capture.
+
 ## Licences
 
 **Data: Open Government Licence v3.0.** The ratings are published by the Food
