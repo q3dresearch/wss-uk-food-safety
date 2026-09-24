@@ -189,6 +189,26 @@ wss health --dry-run
    workflow), confirm the bot's data commit lands, then let the cron take
    over.
 
+## Questions this exists to answer
+
+![All 9 questions here are answered or on a clock.](examples/charts/maturity.svg)
+
+**8 of these 9 are answered from captures already held.** 1 become answerable only as the series lengthens — the plate shows when. Every other one is on the clock, so the plate is a schedule rather than a wish list.
+
+
+| # | question | status |
+| --- | --- | --- |
+| Q1 | How many ratings are there, and how much history? | **answered** — 613,146 ratings and no record of the one before → [nothing is kept](examples/charts/nothing-is-kept.svg) |
+| Q2 | What does the publisher keep, against what this keeps? | **answered** → [what is kept](examples/charts/what-is-kept.svg) |
+| Q3 | How old is the rating in the window? | **answered** — one in six is three years old or more → [rating age](examples/charts/rating-age.svg) |
+| Q4 | When was the rating in the window actually given? | **answered** → [inspection recency](examples/charts/inspection-recency.svg) |
+| Q5 | What does a 1 actually measure? | **answered** — a judgement about the operator, not a dirtier kitchen → [what drives a bad rating](examples/charts/what-drives-a-bad-rating.svg) |
+| Q6 | Do neighbouring authorities rate the same street the same way? | **answered — no**, half a star apart → [boundary discontinuity](examples/charts/boundary-discontinuity.svg), and the gap is widest in the building, not the judgement → [boundary components](examples/charts/boundary-components.svg) |
+| Q7 | Is the cohort big enough to answer these? | **answered — yes** → [what it can answer](examples/charts/what-it-can-answer.svg) |
+| Q8 | What could you decide with this, and when? | **answered** → [decisions](examples/charts/decisions.svg) |
+| Q9 | When a rating changes, what was it before? | needs 2+ captures. **The reason for capturing** — there is no history, previous or prior field in the API, and the Internet Archive holds zero captures of it |
+
+
 ## Figures
 
 Built by the scripts in [`examples/`](examples/), from the captures in this
